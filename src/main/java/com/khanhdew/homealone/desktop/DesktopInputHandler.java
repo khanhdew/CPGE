@@ -4,7 +4,6 @@ import com.khanhdew.homealone.desktop.utils.Keyboard;
 import com.khanhdew.homealone.desktop.utils.Mouse;
 import com.khanhdew.homealone.engine.GameEngine;
 import com.khanhdew.homealone.utils.InputHandler;
-import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import lombok.Getter;
@@ -13,8 +12,8 @@ import lombok.Getter;
 public class DesktopInputHandler implements InputHandler {
     private final GameEngine gameEngine;
     private final GamePane gamePane;
-    private final EventHandler<MouseEvent> mouseEventEventHandler;
-    private final EventHandler<KeyEvent> keyEventEventHandler;
+    private final Mouse mouseEventEventHandler;
+    private final Keyboard keyEventEventHandler;
 
     public DesktopInputHandler(GameEngine gameEngine, GamePane gamePane) {
         this.gameEngine = gameEngine;

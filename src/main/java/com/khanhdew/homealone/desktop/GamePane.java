@@ -6,6 +6,8 @@ import com.khanhdew.homealone.engine.GameEngine;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 import lombok.Getter;
 
 @Getter
@@ -16,13 +18,12 @@ public class GamePane extends BorderPane  {
     private DesktopRenderer renderer;
     private DesktopInputHandler inputHandler;
     private GameApp gameApp;
-    private final int FPS_SET = 60;
-    private final int UPS_SET = 200;
 
     public GamePane() {
         setupPane();
         setupCanvas();
         init();
+//        setEventHandler(WindowEvent.);
     }
 
     private void init(){
@@ -31,32 +32,6 @@ public class GamePane extends BorderPane  {
         inputHandler = new DesktopInputHandler(gameEngine, this);
         gameApp = new GameApp(gameEngine,renderer,inputHandler);
         gameApp.start();
-
-//        new AnimationTimer(){
-//            long lastUpdate = 0;
-//            long lastRender = 0;
-//            final double timePerUpdate = 1000000000.0 / UPS_SET;
-//            final double timePerFrame = 1000000000.0 / FPS_SET;
-//
-//            @Override
-//            public void handle(long now) {
-//                if (lastUpdate == 0) {
-//                    lastUpdate = now;
-//                    lastRender = now;
-//                    gameApp.update();
-//                }
-//
-//                if (now - lastUpdate >= timePerUpdate) {
-//                    lastUpdate = now;
-//                    gameApp.update();
-//                }
-//
-//                if (now - lastRender >= timePerFrame) {
-//                    lastRender = now;
-//                    renderer.draw(gameEngine);
-//                }
-//            }
-//        }.start();
     }
 
     private void setupCanvas() {
@@ -71,4 +46,8 @@ public class GamePane extends BorderPane  {
         requestFocus();
     }
 
+    public void windowFocusLost(){
+        gameApp.stop();
+        inputHandler.getKeyEventEventHandler().resetDirMovement();
+    }
 }

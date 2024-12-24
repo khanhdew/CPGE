@@ -10,7 +10,6 @@ public class GameConfiguration {
     private int windowWidth = 1200;
     private int windowHeight = 800;
     private double windowScale = (double) 16 /9;
-    private int FPS_SET = 60;
 
     public GameConfiguration(){
     }

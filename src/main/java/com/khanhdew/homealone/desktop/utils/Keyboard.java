@@ -38,4 +38,8 @@ public class Keyboard implements EventHandler<KeyEvent> {
 
         gamePane.getGameEngine().getPlayer().offset(dx, dy);
     }
+
+    public void resetDirMovement(){
+        pressedKeys.clear();
+    }
 }

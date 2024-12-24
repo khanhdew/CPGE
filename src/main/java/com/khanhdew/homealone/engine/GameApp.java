@@ -2,6 +2,9 @@ package com.khanhdew.homealone.engine;
 
 import com.khanhdew.homealone.utils.InputHandler;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 
 public class GameApp {
     private GameEngine gameEngine;
@@ -9,6 +12,7 @@ public class GameApp {
     private InputHandler inputHandler;
     private Thread gameLogicThread;
     private Thread gameRenderThread;
+//    private ExecutorService executorService;
 
 
     public GameApp() {
@@ -30,6 +34,7 @@ public class GameApp {
     // Bắt đầu game
     public void start() {
         gameEngine.getState().resumeGame();
+//        executorService = Executors.new
         gameLogicThread = new GameLogicThread();
         gameRenderThread = new GameRenderThread();
         inputHandler.handleInput();
@@ -66,7 +71,7 @@ public class GameApp {
             }
         }
 
-        private void updateGameLogic() {
+        private synchronized void updateGameLogic() {
             // Cập nhật tất cả các entities trong game
             gameEngine.update();
         }
@@ -88,7 +93,7 @@ public class GameApp {
             }
         }
 
-        private void render() {
+        private synchronized void render() {
             renderer.draw(gameEngine);
         }
     }
