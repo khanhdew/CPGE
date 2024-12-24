@@ -1,29 +1,36 @@
 package com.khanhdew.homealone.desktop;
 
+import com.khanhdew.homealone.desktop.utils.Keyboard;
+import com.khanhdew.homealone.desktop.utils.Mouse;
 import com.khanhdew.homealone.engine.GameEngine;
 import com.khanhdew.homealone.utils.InputHandler;
+import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import lombok.Getter;
 
-
+@Getter
 public class DesktopInputHandler implements InputHandler {
-    private GameEngine gameEngine;
-    public DesktopInputHandler(GameEngine gameEngine, GamePane gamePane){
+    private final GameEngine gameEngine;
+    private final GamePane gamePane;
+    private final EventHandler<MouseEvent> mouseEventEventHandler;
+    private final EventHandler<KeyEvent> keyEventEventHandler;
+
+    public DesktopInputHandler(GameEngine gameEngine, GamePane gamePane) {
         this.gameEngine = gameEngine;
-        gamePane.addEventHandler(MouseEvent.MOUSE_CLICKED,this::handleMouseClick);
-        gamePane.addEventHandler(KeyEvent.KEY_PRESSED,this::handleKeyPress);
+        this.gamePane = gamePane;
+        mouseEventEventHandler = new Mouse(gamePane);
+        keyEventEventHandler = new Keyboard(gamePane);
     }
+
     @Override
     public void handleInput() {
+        // handle mouse input
+        gamePane.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEventEventHandler);
 
-    }
-
-    public void handleMouseClick(MouseEvent event){
-        System.out.println(event.getX() + " " + event.getY());
-    }
-
-    public void handleKeyPress(KeyEvent event){
-        System.out.println(event.getText());
+        // handle key input
+        gamePane.addEventHandler(KeyEvent.KEY_PRESSED, keyEventEventHandler);
+        gamePane.addEventHandler(KeyEvent.KEY_RELEASED, keyEventEventHandler);
     }
 
 }

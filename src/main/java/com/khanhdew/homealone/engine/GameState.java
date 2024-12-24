@@ -1,5 +1,8 @@
 package com.khanhdew.homealone.engine;
 
+import lombok.Getter;
+
+
 public class GameState {
     private boolean isRunning = false;
     public GameState() {

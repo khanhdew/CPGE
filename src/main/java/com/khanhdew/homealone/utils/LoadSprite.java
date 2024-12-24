@@ -7,6 +7,8 @@ import java.io.InputStream;
 
 
 public class LoadSprite {
+    public static String PlayerSprite = "player.png";
+
     public static BufferedImage GetSpriteAtlas(String fileName) {
         BufferedImage img = null;
         InputStream is = LoadSprite.class.getClassLoader().getResourceAsStream(fileName);
