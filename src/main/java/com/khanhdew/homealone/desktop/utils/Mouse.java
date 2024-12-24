@@ -13,6 +13,7 @@ public class Mouse implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent event) {
-//        System.out.println(event.getX() + " " + event.getY());
+        gamePane.getGameEngine().getPlayer().setX((int)event.getX());
+        gamePane.getGameEngine().getPlayer().setY((int)event.getY());
     }
 }

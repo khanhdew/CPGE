@@ -12,6 +12,7 @@ public abstract class BaseEntity {
     protected int y;
     protected int w;
     protected int h;
+//    protected int speed;
 
     public abstract void update();
     // check va chạm

@@ -26,7 +26,7 @@ public class DesktopInputHandler implements InputHandler {
     public void handleInput() {
         // handle mouse input
         gamePane.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEventEventHandler);
-
+        gamePane.addEventHandler(MouseEvent.MOUSE_MOVED, mouseEventEventHandler);
         // handle key input
         gamePane.addEventHandler(KeyEvent.KEY_PRESSED, keyEventEventHandler);
         gamePane.addEventHandler(KeyEvent.KEY_RELEASED, keyEventEventHandler);

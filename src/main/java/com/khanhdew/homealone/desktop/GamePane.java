@@ -11,9 +11,11 @@ import javafx.stage.WindowEvent;
 import lombok.Getter;
 
 @Getter
-public class GamePane extends BorderPane  {
-    private final GameConfiguration configuration = GameConfiguration.getInstance();;
-    private final Canvas canvas = new Canvas(configuration.getWindowWidth(), configuration.getWindowHeight());;
+public class GamePane extends BorderPane {
+    private final GameConfiguration configuration = GameConfiguration.getInstance();
+    ;
+    private final Canvas canvas = new Canvas(configuration.getWindowWidth(), configuration.getWindowHeight());
+    ;
     private GameEngine gameEngine;
     private DesktopRenderer renderer;
     private DesktopInputHandler inputHandler;
@@ -23,15 +25,16 @@ public class GamePane extends BorderPane  {
         setupPane();
         setupCanvas();
         init();
-//        setEventHandler(WindowEvent.);
+
     }
 
-    private void init(){
+    private void init() {
         gameEngine = new GameEngine();
         renderer = new DesktopRenderer(canvas);
         inputHandler = new DesktopInputHandler(gameEngine, this);
-        gameApp = new GameApp(gameEngine,renderer,inputHandler);
+        gameApp = new GameApp(gameEngine, renderer, inputHandler);
         gameApp.start();
+
     }
 
     private void setupCanvas() {
@@ -46,8 +49,52 @@ public class GamePane extends BorderPane  {
         requestFocus();
     }
 
-    public void windowFocusLost(){
+    public void windowFocusLost() {
         gameApp.stop();
         inputHandler.getKeyEventEventHandler().resetDirMovement();
     }
+
+//    @Override
+//    public void run() {
+//        double timePerFrame = 1000000000.0 / 60;
+//        double timePerUpdate = 1000000000.0 / 120;
+//
+//        long previousTime = System.nanoTime();
+//
+//        int frames = 0;
+//        int updates = 0;
+//        long lastCheck = System.currentTimeMillis();
+//
+//        double deltaU = 0;
+//        double deltaF = 0;
+//
+//        while (true) {
+//            long currentTime = System.nanoTime();
+//
+//            deltaU += (currentTime - previousTime) / timePerUpdate;
+//            deltaF += (currentTime - previousTime) / timePerFrame;
+//            previousTime = currentTime;
+//
+//            if (deltaU >= 1) {
+//                gameApp.update();
+//                updates++;
+//                deltaU--;
+//            }
+//
+//            if (deltaF >= 1) {
+//                gameApp.update();
+//                frames++;
+//                deltaF--;
+//            }
+//
+//            if (System.currentTimeMillis() - lastCheck >= 1000) {
+//                lastCheck = System.currentTimeMillis();
+//                System.out.println("FPS: " + frames + " | UPS: " + updates);
+//                frames = 0;
+//                updates = 0;
+//
+//            }
+//        }
+//
+//    }
 }
