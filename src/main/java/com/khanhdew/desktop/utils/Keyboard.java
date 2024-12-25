@@ -9,7 +9,6 @@ import java.util.Set;
 public class Keyboard {
     private GamePane gamePane;
     private Set<String> pressedKeys = new HashSet<>();
-    private long flag=0;
 
     public Keyboard(GamePane gamePane) {
         this.gamePane = gamePane;
@@ -19,7 +18,6 @@ public class Keyboard {
         String code = event.getCode().toString();
         pressedKeys.add(code);
         updatePlayerMovement();
-        flag++;
     }
 
     public void handleKeyRelease(KeyEvent event) {

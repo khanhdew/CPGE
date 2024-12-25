@@ -1,13 +1,18 @@
 package com.khanhdew.gameengine.engine;
 
+import com.khanhdew.gameengine.config.GameConfiguration;
 import com.khanhdew.gameengine.entity.BaseEntity;
 import com.khanhdew.gameengine.entity.Enemy;
 import com.khanhdew.gameengine.entity.Player;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 @Setter
 @Getter
@@ -15,17 +20,25 @@ public class GameEngine {
     private List<BaseEntity> entities;
     private GameState state;
     private Player player;
+    private Random random;
 
     public GameEngine() {
-        entities = Arrays.asList(
-                new Enemy(50, 10, 100, 80),
-                new Enemy(100, 70, 70, 120),
-                new Enemy(279, 659, 120, 110),
-                new Enemy(384, 389, 50, 90),
-                new Enemy(700, 600, 40, 70)
-        );
+        random = new Random();
+        entities = new ArrayList<>();
+        spawnEnemy(10);
         state = new GameState();
         player = new Player(900, 100, 50, 50);
+    }
+
+    private void spawnEnemy(int numberOfEnemies) {
+        for (int i = 0; i < numberOfEnemies; i++) {
+            int x = random.nextInt(0, GameConfiguration.windowWidth);
+            int y = random.nextInt(0, GameConfiguration.windowHeight);
+            int w = random.nextInt(50, 200);
+            int h = random.nextInt(50, 200);
+            entities.add(new Enemy(x, y, w, h));
+        }
+        System.out.println("Spawned " + numberOfEnemies + " enemies");
     }
 
     public void update() {
@@ -34,7 +47,6 @@ public class GameEngine {
         }
         player.update();
         checkCollision();
-        System.out.println(entities.size());
     }
 
     public void checkCollision() {
@@ -43,5 +55,11 @@ public class GameEngine {
                 entities.remove(i);
             }
         }
+    }
+
+    public void spawnEnemyPerSecond(int second) {
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        scheduler.scheduleAtFixedRate(() -> spawnEnemy(3), 2, second, TimeUnit.SECONDS);
+
     }
 }

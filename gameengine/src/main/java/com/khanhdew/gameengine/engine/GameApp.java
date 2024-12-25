@@ -32,6 +32,7 @@ public class GameApp {
         this.audioManager = audioManager;
         gameEngine.getState().pauseGame();
         inputHandler.handleInput();
+        gameEngine.spawnEnemyPerSecond(2);
     }
 
     public void update() {

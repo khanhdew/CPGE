@@ -5,7 +5,6 @@
  * Learn more about Gradle by exploring our Samples at https://docs.gradle.org/8.12/samples
  */
 plugins {
-    id 'base'  // Plugin cơ bản cho dự án đa module
     id 'java'
     id 'application'
     id 'org.javamodularity.moduleplugin' version '1.8.12'
@@ -16,7 +15,6 @@ repositories {
         mavenCentral()
     }
 subprojects {
-
 
     // Các cấu hình chung cho các module con
     apply plugin: 'java'
