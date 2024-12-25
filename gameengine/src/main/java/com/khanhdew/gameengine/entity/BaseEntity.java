@@ -10,7 +10,6 @@ public abstract class BaseEntity {
     protected int y;
     protected int w;
     protected int h;
-    protected float walkSpeed;
 
     public BaseEntity(int x, int y, int w, int h) {
         this.x = x;

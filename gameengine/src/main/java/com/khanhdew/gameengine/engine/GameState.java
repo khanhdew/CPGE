@@ -3,21 +3,21 @@ package com.khanhdew.gameengine.engine;
 
 public class GameState {
     private static GameState instance;
-    private  boolean isRunning = false;
+    private volatile boolean isRunning = false;
     public GameState() {
         isRunning = true;
     }
 
-    public synchronized boolean isRunning() {
+    public boolean isRunning() {
         return isRunning;
     }
 
-    public synchronized void pauseGame() {
+    public void pauseGame() {
         isRunning = false;
         System.out.println("Game stopped");
     }
 
-    public synchronized void resumeGame() {
+    public void resumeGame() {
         isRunning = true;
         System.out.println("Game resumed");
     }

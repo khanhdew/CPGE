@@ -2,7 +2,7 @@ package com.khanhdew.gameengine.entity;
 
 import com.khanhdew.gameengine.config.GameConfiguration;
 
-public class Enemy extends BaseEntity {
+public class Enemy extends MovableEntity {
     public Enemy(int x, int y, int w, int h) {
         super(x, y, w, h);
     }

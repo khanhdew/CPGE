@@ -79,10 +79,12 @@ public class GameApp {
     private class GameLogicThread extends Thread implements Serializable {
         @Serial
         private static final long serialVersionUID = 1L;
-        public GameLogicThread(){
+
+        public GameLogicThread() {
             super("gameLogicThread-" + serialVersionUID);
             System.out.println("LogicThread created");
         }
+
         @Override
         public void run() {
             long previousTime = System.nanoTime();
@@ -111,11 +113,12 @@ public class GameApp {
         }
     }
 
-    private class GameRenderThread extends Thread implements Serializable{
+    private class GameRenderThread extends Thread implements Serializable {
         @Serial
         private static final long serialVersionUID = 1L;
-        public GameRenderThread(){
-            super("gameRenderThread-"+serialVersionUID);
+
+        public GameRenderThread() {
+            super("gameRenderThread-" + serialVersionUID);
             System.out.println("RenderThread created");
         }
 
@@ -123,26 +126,49 @@ public class GameApp {
         public void run() {
             long previousTime = System.nanoTime();
             int frames = 0;
-            long lastCheck = System.currentTimeMillis();
+            long lastCheck = System.nanoTime(); // Sử dụng nanoTime thay vì currentTimeMillis
             double deltaF = 0;
 
-            while (gameEngine.getState().isRunning()) {
-                long currentTime = System.nanoTime();
-                deltaF += (currentTime - previousTime) / timePerFrame;
-                previousTime = currentTime;
+            try {
+                boolean running = gameEngine.getState().isRunning(); // Lưu trạng thái cục bộ
+                while (running) {
+                    long currentTime = System.nanoTime();
+                    deltaF += (currentTime - previousTime) / timePerFrame;
+                    previousTime = currentTime;
 
-                if (deltaF >= 1) {
-                    renderer.draw(gameEngine);
-                    frames++;
-                    deltaF--;
-                }
+                    if (deltaF >= 1) {
+                        renderer.draw(gameEngine); // Render frame
+                        frames++;
+                        deltaF--;
+                    }
 
-                if (System.currentTimeMillis() - lastCheck >= 1000) {
-                    lastCheck = System.currentTimeMillis();
-                    fps = frames;
-                    frames = 0;
+                    if (System.nanoTime() - lastCheck >= 1_000_000_000) { // Kiểm tra mỗi giây
+                        lastCheck = System.nanoTime();
+                        fps = frames;
+                        frames = 0;
+                    }
+
+                    // Cập nhật trạng thái trong vòng lặp
+                    running = gameEngine.getState().isRunning();
                 }
+            } catch (Exception e) {
+                System.err.println("Render thread encountered an error: " + e.getMessage());
+                e.printStackTrace();
+            } finally {
+                System.out.println("Render thread stopped.");
+            }
+        }
+
+        public void stopRender() {
+            gameEngine.getState().pauseGame(); // Dừng trạng thái game
+            try {
+                join(); // Chờ thread hoàn thành
+                System.out.println("RenderThread stopped.");
+            } catch (InterruptedException e) {
+                System.err.println("Error while stopping RenderThread: " + e.getMessage());
+                Thread.currentThread().interrupt();
             }
         }
     }
+
 }
