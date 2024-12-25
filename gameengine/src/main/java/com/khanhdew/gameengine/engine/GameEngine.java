@@ -26,14 +26,14 @@ public class GameEngine {
         random = new Random();
         entities = new ArrayList<>();
         spawnEnemy(10);
-        state = new GameState();
+        state = GameState.getInstance();
         player = new Player(900, 100, 50, 50);
     }
 
-    private void spawnEnemy(int numberOfEnemies) {
+    private synchronized void spawnEnemy(int numberOfEnemies) {
         for (int i = 0; i < numberOfEnemies; i++) {
-            int x = random.nextInt(0, GameConfiguration.windowWidth);
-            int y = random.nextInt(0, GameConfiguration.windowHeight);
+            int x = random.nextInt(0, GameConfiguration.getInstance().getWindowWidth());
+            int y = random.nextInt(0, GameConfiguration.getInstance().getWindowHeight());
             int w = random.nextInt(50, 200);
             int h = random.nextInt(50, 200);
             entities.add(new Enemy(x, y, w, h));
@@ -60,8 +60,8 @@ public class GameEngine {
     public void spawnEnemyPerSecond(int second) {
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(() -> {
-                    if (GameState.isRunning())
-                        spawnEnemy(3);
+                    if (state.isRunning())
+                        spawnEnemy(1);
                 }
                 , 2, second, TimeUnit.SECONDS);
     }

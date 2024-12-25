@@ -1,6 +1,6 @@
 package com.khanhdew.desktop.utils;
 
-import com.khanhdew.desktop.GamePane;
+import com.khanhdew.desktop.main.GamePane;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 

@@ -17,10 +17,10 @@ public class Enemy extends BaseEntity {
         y += velocityY;
 
         // Check for collision with window boundaries and reverse direction if necessary
-        if (x <= 0 || x + w >= GameConfiguration.windowWidth) {
+        if (x <= 0 || x + w >= GameConfiguration.getInstance().getWindowWidth()) {
             velocityX = -velocityX;
         }
-        if (y <= 0 || y + w >= GameConfiguration.windowHeight) {
+        if (y <= 0 || y + h >= GameConfiguration.getInstance().getWindowHeight()) {
             velocityY = -velocityY;
         }
     }

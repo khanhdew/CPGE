@@ -1,4 +1,4 @@
-package com.khanhdew.desktop;
+package com.khanhdew.desktop.main;
 
 
 import com.khanhdew.gameengine.utils.LoadSprite;

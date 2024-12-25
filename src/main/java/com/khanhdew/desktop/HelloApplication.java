@@ -1,5 +1,7 @@
 package com.khanhdew.desktop;
 
+import com.khanhdew.desktop.main.GamePane;
+import com.khanhdew.desktop.main.GameScene;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

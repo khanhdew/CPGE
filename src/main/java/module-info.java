@@ -8,4 +8,8 @@ module com.khanhdew.desktop {
 
     opens com.khanhdew.desktop to javafx.fxml;
     exports com.khanhdew.desktop;
+    exports com.khanhdew.desktop.main;
+    opens com.khanhdew.desktop.main to javafx.fxml;
+    exports com.khanhdew.desktop.main.processor;
+    opens com.khanhdew.desktop.main.processor to javafx.fxml;
 }

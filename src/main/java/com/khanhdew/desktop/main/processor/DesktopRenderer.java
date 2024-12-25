@@ -1,4 +1,4 @@
-package com.khanhdew.desktop;
+package com.khanhdew.desktop.main.processor;
 
 import com.khanhdew.gameengine.config.GameConfiguration;
 import com.khanhdew.gameengine.engine.GameApp;
@@ -55,7 +55,7 @@ public class DesktopRenderer implements GameRenderer {
 //        }
         gc.setFill(Color.color(0,0,0));
         gc.fillRect(player.getX(), player.getY(), player.getW(), player.getH());
-        if (GameConfiguration.SHOW_FPS) {
+        if (GameConfiguration.getInstance().isSHOW_FPS()) {
             gc.fillText("FPS: " + GameApp.fps + "| UPS:" + GameApp.ups,50,50);
         }
     }

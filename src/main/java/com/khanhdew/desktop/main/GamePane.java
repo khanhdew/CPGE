@@ -1,5 +1,7 @@
-package com.khanhdew.desktop;
+package com.khanhdew.desktop.main;
 
+import com.khanhdew.desktop.main.processor.DesktopInputHandler;
+import com.khanhdew.desktop.main.processor.DesktopRenderer;
 import com.khanhdew.gameengine.config.GameConfiguration;
 import com.khanhdew.desktop.audio.AudioPlayer;
 import com.khanhdew.gameengine.engine.GameApp;
@@ -12,7 +14,7 @@ import lombok.Getter;
 @Getter
 public class GamePane extends BorderPane {
     private final GameConfiguration configuration = GameConfiguration.getInstance();
-    private final Canvas canvas = new Canvas(GameConfiguration.windowWidth, GameConfiguration.windowHeight);
+    private final Canvas canvas = new Canvas(GameConfiguration.getInstance().getWindowWidth(), GameConfiguration.getInstance().getWindowHeight());
     private GameEngine gameEngine;
     private DesktopRenderer renderer;
     private DesktopInputHandler inputHandler;
@@ -40,7 +42,7 @@ public class GamePane extends BorderPane {
     }
 
     private void setupPane() {
-        setPrefSize(GameConfiguration.windowWidth, GameConfiguration.windowHeight);
+        setPrefSize(GameConfiguration.getInstance().getWindowWidth(), GameConfiguration.getInstance().getWindowHeight());
         setCenter(canvas);
         setFocusTraversable(true);
         requestFocus();

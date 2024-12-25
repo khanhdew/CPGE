@@ -4,6 +4,8 @@ import com.khanhdew.gameengine.config.GameConfiguration;
 import com.khanhdew.gameengine.utils.AudioManager;
 import com.khanhdew.gameengine.utils.InputHandler;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -15,10 +17,12 @@ public class GameApp {
     private InputHandler inputHandler;
     private AudioManager audioManager;
     private ExecutorService executorService = Executors.newCachedThreadPool();
+    private GameLogicThread gameLogicThread;
+    private GameRenderThread gameRenderThread;
     private final GameConfiguration configuration = GameConfiguration.getInstance();
-    private final double timePerFrame = GameConfiguration.timePerFrame;
-    private final double timePerUpdate = GameConfiguration.timePerUpdate;
-    private final boolean SHOW_FPS_UPS = GameConfiguration.SHOW_FPS;
+    private final double timePerFrame = GameConfiguration.getInstance().getTimePerFrame();
+    private final double timePerUpdate = GameConfiguration.getInstance().getTimePerUpdate();
+    private final boolean SHOW_FPS_UPS = GameConfiguration.getInstance().isSHOW_FPS();
     public static int fps = 0;
     public static int ups = 0;
 
@@ -30,6 +34,8 @@ public class GameApp {
         this.renderer = renderer;
         this.inputHandler = inputHandler;
         this.audioManager = audioManager;
+        gameLogicThread = new GameLogicThread();
+        gameRenderThread = new GameRenderThread();
         gameEngine.getState().pauseGame();
         inputHandler.handleInput();
         gameEngine.spawnEnemyPerSecond(2);
@@ -41,15 +47,18 @@ public class GameApp {
 
     public void start() {
         gameEngine.getState().resumeGame();
-        executorService.submit(new GameLogicThread());
-        executorService.submit(new GameRenderThread());
+        submitThread();
+    }
+
+    private void submitThread() {
+        executorService.submit(gameLogicThread);
+        executorService.submit(gameRenderThread);
     }
 
     public void resume() {
         gameEngine.getState().resumeGame();
         executorService = Executors.newCachedThreadPool();
-        executorService.submit(new GameLogicThread());
-        executorService.submit(new GameRenderThread());
+        submitThread();
     }
 
     public void stop() {
@@ -67,7 +76,13 @@ public class GameApp {
         }
     }
 
-    private class GameLogicThread extends Thread {
+    private class GameLogicThread extends Thread implements Serializable {
+        @Serial
+        private static final long serialVersionUID = 1L;
+        public GameLogicThread(){
+            super("gameLogicThread-" + serialVersionUID);
+            System.out.println("LogicThread created");
+        }
         @Override
         public void run() {
             long previousTime = System.nanoTime();
@@ -96,7 +111,14 @@ public class GameApp {
         }
     }
 
-    private class GameRenderThread extends Thread {
+    private class GameRenderThread extends Thread implements Serializable{
+        @Serial
+        private static final long serialVersionUID = 1L;
+        public GameRenderThread(){
+            super("gameRenderThread-"+serialVersionUID);
+            System.out.println("RenderThread created");
+        }
+
         @Override
         public void run() {
             long previousTime = System.nanoTime();

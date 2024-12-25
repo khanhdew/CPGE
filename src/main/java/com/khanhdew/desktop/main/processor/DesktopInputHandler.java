@@ -1,5 +1,6 @@
-package com.khanhdew.desktop;
+package com.khanhdew.desktop.main.processor;
 
+import com.khanhdew.desktop.main.GamePane;
 import com.khanhdew.desktop.utils.Keyboard;
 import com.khanhdew.desktop.utils.Mouse;
 import com.khanhdew.gameengine.engine.GameEngine;
