@@ -1,7 +1,5 @@
-package com.khanhdew.homealone;
+package com.khanhdew.desktop;
 
-import com.khanhdew.homealone.desktop.GamePane;
-import com.khanhdew.homealone.desktop.GameScene;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -9,10 +7,9 @@ import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-
 import java.io.IOException;
 
-public class HomeAloneApplication extends Application {
+public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         GamePane gamePane = new GamePane();

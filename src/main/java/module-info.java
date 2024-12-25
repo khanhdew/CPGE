@@ -1,10 +1,11 @@
-module com.khanhdew.homealone {
+module com.khanhdew.desktop {
     requires javafx.controls;
     requires javafx.fxml;
-    requires static lombok;
+    requires lombok;
+    requires javafx.media;
     requires javafx.swing;
+    requires com.khanhdew.gameengine;
 
-
-    opens com.khanhdew.homealone to javafx.fxml;
-    exports com.khanhdew.homealone;
+    opens com.khanhdew.desktop to javafx.fxml;
+    exports com.khanhdew.desktop;
 }
