@@ -2,20 +2,20 @@ package com.khanhdew.gameengine.engine;
 
 
 public class GameState {
-    private boolean isRunning = false;
+    private static boolean isRunning = false;
     public GameState() {
-        this.isRunning = true;
+        isRunning = true;
     }
 
-    public boolean isRunning() {
+    public static boolean isRunning() {
         return isRunning;
     }
 
     public void pauseGame() {
-        this.isRunning = false;
+        isRunning = false;
     }
 
     public void resumeGame() {
-        this.isRunning = true;
+        isRunning = true;
     }
 }

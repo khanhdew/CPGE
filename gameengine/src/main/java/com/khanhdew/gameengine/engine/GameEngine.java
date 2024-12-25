@@ -59,7 +59,10 @@ public class GameEngine {
 
     public void spawnEnemyPerSecond(int second) {
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-        scheduler.scheduleAtFixedRate(() -> spawnEnemy(3), 2, second, TimeUnit.SECONDS);
-
+        scheduler.scheduleAtFixedRate(() -> {
+                    if (GameState.isRunning())
+                        spawnEnemy(3);
+                }
+                , 2, second, TimeUnit.SECONDS);
     }
 }
