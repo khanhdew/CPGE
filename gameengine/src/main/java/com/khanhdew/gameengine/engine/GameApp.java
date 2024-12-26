@@ -18,7 +18,7 @@ public class GameApp {
     private AudioManager audioManager;
     private ExecutorService executorService = Executors.newCachedThreadPool();
     private GameLogicThread gameLogicThread;
-    private GameRenderThread gameRenderThread;
+    //    private GameRenderThread gameRenderThread;
     private final GameConfiguration configuration = GameConfiguration.getInstance();
     private final double timePerFrame = configuration.getTimePerFrame();
     private final double timePerUpdate = configuration.getTimePerUpdate();
@@ -34,7 +34,7 @@ public class GameApp {
         this.inputHandler = inputHandler;
         this.audioManager = audioManager;
         gameLogicThread = new GameLogicThread();
-        gameRenderThread = new GameRenderThread();
+//        gameRenderThread = new GameRenderThread();
         gameEngine.getState().pauseGame();
         inputHandler.handleInput();
         gameEngine.spawnEnemyPerSecond(2, 0);
@@ -52,7 +52,7 @@ public class GameApp {
 
     private void submitThread() {
         executorService.submit(gameLogicThread);
-        executorService.submit(gameRenderThread);
+//        executorService.submit(gameRenderThread);
     }
 
     public void resume() {
@@ -123,6 +123,41 @@ public class GameApp {
             }
         }
 
+    }
+
+    long previousTime = System.nanoTime();
+    int frames = 0;
+    long lastCheck = System.nanoTime(); // Sử dụng nanoTime thay vì currentTimeMillis
+    double deltaF = 0;
+
+    public void handleRender() {
+
+        try {
+            boolean running = gameEngine.getState().isRunning(); // Lưu trạng thái cục bộ
+            while (running) {
+                long currentTime = System.nanoTime();
+                deltaF += (currentTime - previousTime) / timePerFrame;
+                previousTime = currentTime;
+
+                if (deltaF >= 1) {
+                    renderer.draw(); // Render frame
+                    frames++;
+                    deltaF--;
+                }
+
+                if (System.nanoTime() - lastCheck >= 1_000_000_000) { // Kiểm tra mỗi giây
+                    lastCheck = System.nanoTime();
+                    fps = frames;
+                    frames = 0;
+                }
+
+                // Cập nhật trạng thái trong vòng lặp
+                running = gameEngine.getState().isRunning();
+            }
+        } catch (Exception e) {
+            System.err.println("Render thread encountered an error: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     private class GameRenderThread extends Thread implements Serializable {

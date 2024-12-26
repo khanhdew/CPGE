@@ -7,7 +7,7 @@ import com.khanhdew.gameengine.engine.GameRenderer;
 import com.khanhdew.gameengine.entity.BaseEntity;
 import com.khanhdew.gameengine.entity.movable.player.Player;
 import com.khanhdew.gameengine.entity.movable.projectile.Projectile;
-import com.khanhdew.gameengine.utils.LoadSprite;
+import com.khanhdew.desktop.utils.LoadSprite;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -30,6 +30,7 @@ public class DesktopRenderer implements GameRenderer {
         this.gameEngine = gameEngine;
         player = gameEngine.getPlayer();
         loadPlayerImage();
+
     }
 
     private void loadPlayerImage() {
@@ -48,8 +49,8 @@ public class DesktopRenderer implements GameRenderer {
 
     @Override
     public void draw() {
-        showFPS();
         drawEnemies();
+        showFPS();
         drawPlayer();
         drawProjectiles();
 
@@ -79,13 +80,15 @@ public class DesktopRenderer implements GameRenderer {
 //        if (playerImg != null) {
 //            gc.drawImage(playerImg, player.getX(), player.getY());
 //        }
-        gc.setFill(Color.color(0, 0, 0));
+        gc.setFill(Color.BLACK);
         gc.fillRect(player.getX(), player.getY(), player.getW(), player.getH());
     }
 
     private void showFPS() {
         if (GameConfiguration.getInstance().isSHOW_FPS()) {
-            gc.fillText("FPS: " + GameApp.fps + "| UPS:" + GameApp.ups, 50, 50);
+            gc.setFill(Color.BLACK);
+//            gc.fillText("FPS: " + GameApp.fps + "| UPS:" + GameApp.ups, 50, 50);
+            gc.fillText("FPS: " + GameApp.fps, 50, 50);
         }
     }
 

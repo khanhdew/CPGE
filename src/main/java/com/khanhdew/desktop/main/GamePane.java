@@ -6,7 +6,10 @@ import com.khanhdew.gameengine.config.GameConfiguration;
 import com.khanhdew.desktop.audio.AudioPlayer;
 import com.khanhdew.gameengine.engine.GameApp;
 import com.khanhdew.gameengine.engine.GameEngine;
+import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.BorderPane;
 import lombok.Getter;
 
@@ -25,11 +28,43 @@ public class GamePane extends BorderPane {
         setupPane();
         setupCanvas();
         init();
+        new AnimationTimer() {
+            private long previousTime = System.nanoTime();
+            private int frames = 0;
+            private long lastCheck = System.nanoTime();
+            private double deltaF = 0;
+
+            @Override
+            public void handle(long currentTime) {
+                try {
+                    boolean running = gameEngine.getState().isRunning();
+                    if (running) {
+                        deltaF += (currentTime - previousTime) / GameConfiguration.getInstance().getTimePerFrame();
+                        previousTime = currentTime;
+
+                        if (deltaF >= 1) {
+                            renderer.draw();
+                            frames++;
+                            deltaF--;
+                        }
+
+                        if (System.nanoTime() - lastCheck >= 1_000_000_000) {
+                            lastCheck = System.nanoTime();
+                            GameApp.fps = frames;
+                            frames = 0;
+                        }
+                    }
+                } catch (Exception e) {
+                    System.err.println("Render thread encountered an error: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
     private void init() {
         gameEngine = new GameEngine();
-        renderer = new DesktopRenderer(canvas,gameEngine);
+        renderer = new DesktopRenderer(canvas, gameEngine);
         inputHandler = new DesktopInputHandler(gameEngine, this);
         gameApp = new GameApp(gameEngine, renderer, inputHandler, audioPlayer);
         gameApp.start();
@@ -39,6 +74,14 @@ public class GamePane extends BorderPane {
     private void setupCanvas() {
         canvas.setFocusTraversable(true);
         canvas.requestFocus();
+        // fix canvas bug
+        canvas.widthProperty().addListener((observable, oldValue, newValue) -> {
+            Platform.runLater(() -> {
+                GraphicsContext gc = canvas.getGraphicsContext2D();
+                gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            });
+        });
+
     }
 
     private void setupPane() {
