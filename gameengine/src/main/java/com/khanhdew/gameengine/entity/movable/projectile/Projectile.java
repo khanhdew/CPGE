@@ -10,8 +10,12 @@ public class Projectile extends MovableEntity {
         this.x = startX;
         this.y = startY;
         this.speed = 1.3;
+        setDirect(startX, startY, targetX, targetY);
+    }
 
-
+    public void setDirect(double startX, double startY, double targetX, double targetY) {
+        this.x = startX;
+        this.y = startY;
         // Tính toán hướng di chuyển
         double directionX = targetX - startX;
         double directionY = targetY - startY;
@@ -19,17 +23,18 @@ public class Projectile extends MovableEntity {
         double magnitude = Math.sqrt(directionX * directionX + directionY * directionY);
 
         // Chuẩn hóa vector hướng và nhân với tốc độ
-        this.vX = ( directionX / magnitude) * speed;
-        this.vY = ( directionY / magnitude) * speed;
+        this.vX = (directionX / magnitude) * speed;
+        this.vY = (directionY / magnitude) * speed;
     }
+
 
     @Override
-    public void update(){
-        this.x += this.vX;
-        this.y += this.vY;
+    public void update() {
+        if (isActive()) {
+            this.x += this.vX;
+            this.y += this.vY;
+        }
     }
-
-
 
 
 }

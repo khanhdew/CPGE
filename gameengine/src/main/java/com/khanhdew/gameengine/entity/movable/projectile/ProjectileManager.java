@@ -7,6 +7,7 @@ import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 public class ProjectileManager implements EntityManager {
@@ -25,7 +26,18 @@ public class ProjectileManager implements EntityManager {
 
     @Override
     public void add(double playerX, double playerY, double targetX, double targetY) {
-        projectiles.add(new Projectile(playerX, playerY, targetX, targetY));
+        Optional<Projectile> inactiveProjectile = projectiles.stream()
+                .filter(e -> !e.isActive())
+                .findFirst();
+
+        if (inactiveProjectile.isPresent()) {
+            Projectile e = inactiveProjectile.get();
+            e.setActive(true);
+            e.setDirect(playerX,playerY,targetX,targetY);
+        } else {
+            // Nếu không có projectile nào không hoạt động, tạo mới
+            projectiles.add(new Projectile(playerX, playerY, targetX, targetY));
+        }
     }
 
     @Override
@@ -36,20 +48,9 @@ public class ProjectileManager implements EntityManager {
                     || projectile.getX() > configuration.getWindowWidth()
                     || projectile.getY() < 0
                     || projectile.getY() > configuration.getWindowHeight()) {
-                projectiles.remove(i);
-                System.out.println("REMOVED");
+                projectile.setActive(false);
             }
         }
     }
 
-    public Projectile checkCollision(BaseEntity entity) {
-        for (int i = projectiles.size() - 1; i >= 0; i--) {
-            Projectile projectile = projectiles.get(i);
-            if (projectile.intersects(entity)) {
-                projectiles.remove(i);
-                return projectile;
-            }
-        }
-        return null;
-    }
 }

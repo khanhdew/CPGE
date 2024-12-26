@@ -17,7 +17,7 @@ import javafx.scene.paint.Color;
 import static com.khanhdew.desktop.utils.ConvertImg.Convert;
 
 public class DesktopRenderer implements GameRenderer {
-    
+
     GraphicsContext gc;
     Image[][] playerAnimations;
     Rectangle2D playerRect;
@@ -25,7 +25,7 @@ public class DesktopRenderer implements GameRenderer {
     Player player;
     GameEngine gameEngine;
 
-    public DesktopRenderer(Canvas canvas, GameEngine gameEngine){
+    public DesktopRenderer(Canvas canvas, GameEngine gameEngine) {
         gc = canvas.getGraphicsContext2D();
         this.gameEngine = gameEngine;
         player = gameEngine.getPlayer();
@@ -56,17 +56,21 @@ public class DesktopRenderer implements GameRenderer {
     }
 
     private void drawProjectiles() {
-    for (Projectile entity : player.getProjectileManager().getProjectiles()) {
-        gc.setFill(Color.BLUE); // Set the color for projectiles
-        gc.fillRect(entity.getX(), entity.getY(), entity.getW(), entity.getH());
+        for (Projectile entity : player.getProjectileManager().getProjectiles()) {
+            if (entity.isActive()) {
+                gc.setFill(Color.BLUE); // Set the color for projectiles
+                gc.fillRect(entity.getX(), entity.getY(), entity.getW(), entity.getH());
+            }
+        }
     }
-}
 
     private void drawEnemies() {
         gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
-        for(BaseEntity entity: gameEngine.getEntities()){
-            gc.setFill(Color.RED);
-            gc.fillRect(entity.getX(), entity.getY(), entity.getW(), entity.getH());
+        for (BaseEntity entity : gameEngine.getEnemyManager().getEnemies()) {
+            if (entity.isActive()) {
+                gc.setFill(Color.RED);
+                gc.fillRect(entity.getX(), entity.getY(), entity.getW(), entity.getH());
+            }
         }
     }
 
@@ -75,17 +79,17 @@ public class DesktopRenderer implements GameRenderer {
 //        if (playerImg != null) {
 //            gc.drawImage(playerImg, player.getX(), player.getY());
 //        }
-        gc.setFill(Color.color(0,0,0));
+        gc.setFill(Color.color(0, 0, 0));
         gc.fillRect(player.getX(), player.getY(), player.getW(), player.getH());
     }
 
     private void showFPS() {
         if (GameConfiguration.getInstance().isSHOW_FPS()) {
-            gc.fillText("FPS: " + GameApp.fps + "| UPS:" + GameApp.ups,50,50);
+            gc.fillText("FPS: " + GameApp.fps + "| UPS:" + GameApp.ups, 50, 50);
         }
     }
 
-    public void updateRect(int x, int y){
+    public void updateRect(int x, int y) {
 
     }
 

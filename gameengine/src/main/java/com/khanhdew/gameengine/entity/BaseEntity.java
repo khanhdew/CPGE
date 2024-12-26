@@ -10,12 +10,14 @@ public abstract class BaseEntity {
     protected double y;
     protected double w;
     protected double h;
+    protected boolean active;
 
     public BaseEntity(double x, double y, double w, double h) {
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
+        this.active = true;
     }
 
     public abstract void update();
