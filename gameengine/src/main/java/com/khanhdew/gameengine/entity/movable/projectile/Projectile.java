@@ -5,6 +5,7 @@ import com.khanhdew.gameengine.entity.movable.MovableEntity;
 public class Projectile extends MovableEntity {
     protected double damage;
 
+
     public Projectile(double startX, double startY, double targetX, double targetY) {
         super(startX, startY, 10, 10);
         this.x = startX;

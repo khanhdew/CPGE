@@ -6,6 +6,7 @@ import com.khanhdew.gameengine.entity.EntityManager;
 import lombok.Getter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +16,7 @@ public class ProjectileManager implements EntityManager {
     private final GameConfiguration configuration = GameConfiguration.getInstance();
 
     public ProjectileManager() {
-        this.projectiles = new ArrayList<>();
+        this.projectiles = Collections.synchronizedList(new ArrayList<>());
     }
 
     @Override
@@ -33,7 +34,7 @@ public class ProjectileManager implements EntityManager {
         if (inactiveProjectile.isPresent()) {
             Projectile e = inactiveProjectile.get();
             e.setActive(true);
-            e.setDirect(playerX,playerY,targetX,targetY);
+            e.setDirect(playerX, playerY, targetX, targetY);
         } else {
             // Nếu không có projectile nào không hoạt động, tạo mới
             projectiles.add(new Projectile(playerX, playerY, targetX, targetY));

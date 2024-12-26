@@ -42,6 +42,7 @@ public class GameApp {
 
     public void update() {
         gameEngine.update();
+        inputHandler.handleRelease();
     }
 
     public void start() {

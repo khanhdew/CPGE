@@ -34,4 +34,12 @@ public class DesktopInputHandler implements InputHandler {
         gamePane.addEventHandler(KeyEvent.KEY_RELEASED, keyHandler::handleKeyRelease);
     }
 
+    @Override
+    public void handleRelease() {
+        if (!keyHandler.isKeyReleased()) {
+            keyHandler.updatePlayerMovement();
+        }
+    }
+
+
 }

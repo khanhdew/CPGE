@@ -5,6 +5,7 @@ import com.khanhdew.gameengine.entity.EntityManager;
 import lombok.Getter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -13,7 +14,7 @@ public class EnemyManager implements EntityManager {
     private final GameConfiguration configuration = GameConfiguration.getInstance();
 
     public EnemyManager() {
-        enemies = new ArrayList<>();
+        enemies = Collections.synchronizedList(new ArrayList<>());
     }
 
     @Override

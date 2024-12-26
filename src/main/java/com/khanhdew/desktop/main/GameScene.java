@@ -1,7 +1,7 @@
 package com.khanhdew.desktop.main;
 
 
-import com.khanhdew.gameengine.utils.LoadSprite;
+import com.khanhdew.desktop.utils.LoadSprite;
 import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

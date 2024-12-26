@@ -16,4 +16,7 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.36'
 }
 
+sourceCompatibility = '17'
+targetCompatibility = '17'
+
 jar.enabled = true

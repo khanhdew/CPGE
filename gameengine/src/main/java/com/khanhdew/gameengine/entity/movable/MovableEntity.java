@@ -2,7 +2,7 @@ package com.khanhdew.gameengine.entity.movable;
 
 import com.khanhdew.gameengine.entity.BaseEntity;
 
-public class MovableEntity extends BaseEntity {
+public abstract class MovableEntity extends BaseEntity {
     protected double speed = 1;
     protected double vX, vY;
 

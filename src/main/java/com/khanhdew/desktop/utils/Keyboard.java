@@ -2,6 +2,7 @@ package com.khanhdew.desktop.utils;
 
 import com.khanhdew.desktop.main.GamePane;
 import javafx.scene.input.KeyEvent;
+import lombok.Getter;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -9,7 +10,8 @@ import java.util.Set;
 public class Keyboard {
     private GamePane gamePane;
     private Set<String> pressedKeys = new HashSet<>();
-//    private long lastUpdateTime = System.nanoTime();
+    @Getter
+    private boolean keyReleased = true;
 
     public Keyboard(GamePane gamePane) {
         this.gamePane = gamePane;
@@ -18,27 +20,27 @@ public class Keyboard {
     public void handleKeyPress(KeyEvent event) {
         String code = event.getCode().toString();
         pressedKeys.add(code);
-        updatePlayerMovement();
+        keyReleased = false;
     }
 
     public void handleKeyRelease(KeyEvent event) {
         String code = event.getCode().toString();
         pressedKeys.remove(code);
+        keyReleased = true;
     }
 
-    private void updatePlayerMovement() {
+    public void updatePlayerMovement() {
         int dx = 0, dy = 0;
-        if (pressedKeys.contains("W")) dy -= 10;
-        if (pressedKeys.contains("S")) dy += 10;
-        if (pressedKeys.contains("A")) dx -= 10;
-        if (pressedKeys.contains("D")) dx += 10;
+        if (pressedKeys.contains("W") || pressedKeys.contains("UP")) dy -= 1;
+        if (pressedKeys.contains("S") || pressedKeys.contains("DOWN")) dy += 1;
+        if (pressedKeys.contains("A") || pressedKeys.contains("LEFT")) dx -= 1;
+        if (pressedKeys.contains("D") || pressedKeys.contains("RIGHT")) dx += 1;
 
-        gamePane.getGameEngine().getPlayer().translateXY(dx,dy);
+        gamePane.getGameEngine().getPlayer().translateXY(dx, dy);
     }
 
     public void resetDirMovement() {
         pressedKeys.clear();
     }
-
 
 }
