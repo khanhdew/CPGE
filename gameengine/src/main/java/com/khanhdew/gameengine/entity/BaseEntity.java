@@ -6,12 +6,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public abstract class BaseEntity {
-    protected int x;
-    protected int y;
-    protected int w;
-    protected int h;
+    protected double x;
+    protected double y;
+    protected double w;
+    protected double h;
 
-    public BaseEntity(int x, int y, int w, int h) {
+    public BaseEntity(double x, double y, double w, double h) {
         this.x = x;
         this.y = y;
         this.w = w;
@@ -33,4 +33,5 @@ public abstract class BaseEntity {
         this.x += dx;
         this.y += dy;
     }
+
 }

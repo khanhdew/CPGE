@@ -13,22 +13,22 @@ import lombok.Getter;
 public class DesktopInputHandler implements InputHandler {
     private final GameEngine gameEngine;
     private final GamePane gamePane;
-    private final Mouse mouseEventEventHandler;
+    private final Mouse mouseHandler;
     private final Keyboard keyHandler;
 
 
     public DesktopInputHandler(GameEngine gameEngine, GamePane gamePane) {
         this.gameEngine = gameEngine;
         this.gamePane = gamePane;
-        mouseEventEventHandler = new Mouse(gamePane);
+        mouseHandler = new Mouse(gamePane);
         keyHandler = new Keyboard(gamePane);
     }
 
     @Override
     public void handleInput() {
         // handle mouse input
-        gamePane.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEventEventHandler);
-        gamePane.addEventHandler(MouseEvent.MOUSE_MOVED, mouseEventEventHandler);
+        gamePane.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseHandler::handlerMouseClick);
+//        gamePane.addEventHandler(MouseEvent.MOUSE_MOVED, mouseEventEventHandler);
         // handle key input
         gamePane.addEventHandler(KeyEvent.KEY_PRESSED, keyHandler::handleKeyPress);
         gamePane.addEventHandler(KeyEvent.KEY_RELEASED, keyHandler::handleKeyRelease);

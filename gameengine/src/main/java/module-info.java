@@ -5,4 +5,8 @@ module com.khanhdew.gameengine {
     exports com.khanhdew.gameengine.entity;
     exports com.khanhdew.gameengine.utils;
     exports com.khanhdew.gameengine.config;
+    exports com.khanhdew.gameengine.entity.movable;
+    exports com.khanhdew.gameengine.entity.movable.player;
+    exports com.khanhdew.gameengine.entity.movable.enemy;
+    exports com.khanhdew.gameengine.entity.movable.projectile;
 }

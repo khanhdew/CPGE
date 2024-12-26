@@ -20,11 +20,10 @@ public class GameApp {
     private GameLogicThread gameLogicThread;
     private GameRenderThread gameRenderThread;
     private final GameConfiguration configuration = GameConfiguration.getInstance();
-    private final double timePerFrame = GameConfiguration.getInstance().getTimePerFrame();
-    private final double timePerUpdate = GameConfiguration.getInstance().getTimePerUpdate();
-    private final boolean SHOW_FPS_UPS = GameConfiguration.getInstance().isSHOW_FPS();
-    public static int fps = 0;
-    public static int ups = 0;
+    private final double timePerFrame = configuration.getTimePerFrame();
+    private final double timePerUpdate = configuration.getTimePerUpdate();
+    public volatile static int fps = 0;
+    public volatile static int ups = 0;
 
     public GameApp() {
     }
@@ -38,7 +37,7 @@ public class GameApp {
         gameRenderThread = new GameRenderThread();
         gameEngine.getState().pauseGame();
         inputHandler.handleInput();
-        gameEngine.spawnEnemyPerSecond(2);
+        gameEngine.spawnEnemyPerSecond(2, 0);
     }
 
     public void update() {
@@ -88,29 +87,41 @@ public class GameApp {
         @Override
         public void run() {
             long previousTime = System.nanoTime();
-            int updates = 0;
-            long lastCheck = System.currentTimeMillis();
+            long lastCheck = System.nanoTime(); // Dùng nanoTime để đảm bảo tính chính xác
             double deltaU = 0;
+            int updates = 0;
 
-            while (gameEngine.getState().isRunning()) {
+            boolean running = gameEngine.getState().isRunning();
+
+            while (running) {
                 long currentTime = System.nanoTime();
                 deltaU += (currentTime - previousTime) / timePerUpdate;
                 previousTime = currentTime;
 
+                // Cập nhật logic game nếu đủ thời gian cho một lần update
                 if (deltaU >= 1) {
-                    update();
+                    try {
+                        update();
+                    } catch (Exception e) {
+                        System.err.println("Error during update: " + e.getMessage());
+                        e.printStackTrace();
+                    }
                     updates++;
                     deltaU--;
                 }
 
-                if (System.currentTimeMillis() - lastCheck >= 1000) {
-                    lastCheck = System.currentTimeMillis();
+                // Kiểm tra UPS mỗi giây
+                if (System.nanoTime() - lastCheck >= 1_000_000_000) { // 1 giây = 1 tỷ nano giây
+                    lastCheck = System.nanoTime();
                     ups = updates;
                     updates = 0;
-
                 }
+
+                // Kiểm tra lại trạng thái running
+                running = gameEngine.getState().isRunning();
             }
         }
+
     }
 
     private class GameRenderThread extends Thread implements Serializable {
@@ -137,7 +148,7 @@ public class GameApp {
                     previousTime = currentTime;
 
                     if (deltaF >= 1) {
-                        renderer.draw(gameEngine); // Render frame
+                        renderer.draw(); // Render frame
                         frames++;
                         deltaF--;
                     }

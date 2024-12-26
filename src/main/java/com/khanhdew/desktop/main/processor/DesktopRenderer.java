@@ -5,7 +5,8 @@ import com.khanhdew.gameengine.engine.GameApp;
 import com.khanhdew.gameengine.engine.GameEngine;
 import com.khanhdew.gameengine.engine.GameRenderer;
 import com.khanhdew.gameengine.entity.BaseEntity;
-import com.khanhdew.gameengine.entity.Player;
+import com.khanhdew.gameengine.entity.movable.player.Player;
+import com.khanhdew.gameengine.entity.movable.projectile.Projectile;
 import com.khanhdew.gameengine.utils.LoadSprite;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.Canvas;
@@ -21,9 +22,13 @@ public class DesktopRenderer implements GameRenderer {
     Image[][] playerAnimations;
     Rectangle2D playerRect;
     Image playerImg;
+    Player player;
+    GameEngine gameEngine;
 
-    public DesktopRenderer(Canvas canvas){
+    public DesktopRenderer(Canvas canvas, GameEngine gameEngine){
         gc = canvas.getGraphicsContext2D();
+        this.gameEngine = gameEngine;
+        player = gameEngine.getPlayer();
         loadPlayerImage();
     }
 
@@ -42,19 +47,39 @@ public class DesktopRenderer implements GameRenderer {
     }
 
     @Override
-    public void draw(GameEngine gameEngine) {
-        gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
+    public void draw() {
+        showFPS();
+        drawEnemies();
+        drawPlayer();
+        drawProjectiles();
 
+    }
+
+    private void drawProjectiles() {
+    for (Projectile entity : player.getProjectileManager().getProjectiles()) {
+        gc.setFill(Color.BLUE); // Set the color for projectiles
+        gc.fillRect(entity.getX(), entity.getY(), entity.getW(), entity.getH());
+    }
+}
+
+    private void drawEnemies() {
+        gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
         for(BaseEntity entity: gameEngine.getEntities()){
             gc.setFill(Color.RED);
             gc.fillRect(entity.getX(), entity.getY(), entity.getW(), entity.getH());
         }
-        Player player = gameEngine.getPlayer();
+    }
+
+    private void drawPlayer() {
+        player = gameEngine.getPlayer();
 //        if (playerImg != null) {
 //            gc.drawImage(playerImg, player.getX(), player.getY());
 //        }
         gc.setFill(Color.color(0,0,0));
         gc.fillRect(player.getX(), player.getY(), player.getW(), player.getH());
+    }
+
+    private void showFPS() {
         if (GameConfiguration.getInstance().isSHOW_FPS()) {
             gc.fillText("FPS: " + GameApp.fps + "| UPS:" + GameApp.ups,50,50);
         }

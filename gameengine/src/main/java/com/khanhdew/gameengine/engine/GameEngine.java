@@ -2,8 +2,9 @@ package com.khanhdew.gameengine.engine;
 
 import com.khanhdew.gameengine.config.GameConfiguration;
 import com.khanhdew.gameengine.entity.BaseEntity;
-import com.khanhdew.gameengine.entity.Enemy;
-import com.khanhdew.gameengine.entity.Player;
+import com.khanhdew.gameengine.entity.movable.enemy.Enemy;
+import com.khanhdew.gameengine.entity.movable.player.Player;
+import com.khanhdew.gameengine.entity.movable.projectile.Projectile;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 @Getter
 public class GameEngine {
     private List<BaseEntity> entities;
+
     private GameState state;
     private Player player;
     private Random random;
@@ -38,7 +40,6 @@ public class GameEngine {
             int h = random.nextInt(50, 200);
             entities.add(new Enemy(x, y, w, h));
         }
-        System.out.println("Spawned " + numberOfEnemies + " enemies");
     }
 
     public void update() {
@@ -46,22 +47,31 @@ public class GameEngine {
             entity.update();
         }
         player.update();
+        player.getProjectileManager().update();
         checkCollision();
     }
 
     public void checkCollision() {
-        for (int i = entities.size() - 1; i >= 0; i--) {
-            if (entities.get(i).intersects(player)) {
+    for (int i = entities.size() - 1; i >= 0; i--) {
+        BaseEntity entity = entities.get(i);
+//        if (entity.intersects(player)) {
+//            entities.remove(i);
+//        }
+        if (entity instanceof Enemy) {
+            Projectile projectile = player.getProjectileManager().checkCollision(entity);
+            if (projectile == null) break;
+            if (entity.intersects(projectile)) {
                 entities.remove(i);
             }
         }
     }
+}
 
-    public void spawnEnemyPerSecond(int second) {
+    public void spawnEnemyPerSecond(int second, int numberOfenemies) {
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(() -> {
                     if (state.isRunning())
-                        spawnEnemy(1);
+                        spawnEnemy(numberOfenemies);
                 }
                 , 2, second, TimeUnit.SECONDS);
     }

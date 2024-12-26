@@ -14,7 +14,7 @@ import lombok.Getter;
 @Getter
 public class GamePane extends BorderPane {
     private final GameConfiguration configuration = GameConfiguration.getInstance();
-    private final Canvas canvas = new Canvas(GameConfiguration.getInstance().getWindowWidth(), GameConfiguration.getInstance().getWindowHeight());
+    private final Canvas canvas = new Canvas(configuration.getWindowWidth(), configuration.getWindowHeight());
     private GameEngine gameEngine;
     private DesktopRenderer renderer;
     private DesktopInputHandler inputHandler;
@@ -29,7 +29,7 @@ public class GamePane extends BorderPane {
 
     private void init() {
         gameEngine = new GameEngine();
-        renderer = new DesktopRenderer(canvas);
+        renderer = new DesktopRenderer(canvas,gameEngine);
         inputHandler = new DesktopInputHandler(gameEngine, this);
         gameApp = new GameApp(gameEngine, renderer, inputHandler, audioPlayer);
         gameApp.start();
@@ -42,7 +42,7 @@ public class GamePane extends BorderPane {
     }
 
     private void setupPane() {
-        setPrefSize(GameConfiguration.getInstance().getWindowWidth(), GameConfiguration.getInstance().getWindowHeight());
+        setPrefSize(configuration.getWindowWidth(), configuration.getWindowHeight());
         setCenter(canvas);
         setFocusTraversable(true);
         requestFocus();
