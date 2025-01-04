@@ -7,6 +7,7 @@ import lombok.Getter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 public class EnemyManager implements EntityManager {
@@ -19,7 +20,19 @@ public class EnemyManager implements EntityManager {
 
     @Override
     public void add(double x, double y, double w, double h) {
-        enemies.add(new Enemy(x, y, w, h));
+        Optional<Enemy> inactiveEnemy = enemies.stream()
+                .filter(e -> !e.isActive())
+                .findFirst();
+
+        if(inactiveEnemy.isPresent()){
+            Enemy e = inactiveEnemy.get();
+            e.setActive(true);
+            e.setX(x);
+            e.setY(y);
+            e.setW(w);
+            e.setH(h);
+        }
+        else enemies.add(new Enemy(x, y, w, h));
     }
 
     @Override

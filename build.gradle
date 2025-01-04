@@ -52,10 +52,12 @@ javafx {
 dependencies {
     implementation project(":gameengine")
     implementation 'org.projectlombok:lombok:1.18.36'
-    compileOnly 'org.projectlombok:lombok:1.18.36'
-    annotationProcessor 'org.projectlombok:lombok:1.18.36'
-    testCompileOnly 'org.projectlombok:lombok:1.18.36'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.36'
+    implementation 'org.openjfx:javafx-controls:17.0.13'
+    implementation 'org.openjfx:javafx-fxml:17.0.13'
+//    compileOnly 'org.projectlombok:lombok:1.18.36'
+//    annotationProcessor 'org.projectlombok:lombok:1.18.36'
+//    testCompileOnly 'org.projectlombok:lombok:1.18.36'
+//    testAnnotationProcessor 'org.projectlombok:lombok:1.18.36'
 }
 
 jlink {

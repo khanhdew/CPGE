@@ -3,14 +3,14 @@ package com.khanhdew.gameengine.entity.movable.projectile;
 import com.khanhdew.gameengine.entity.movable.MovableEntity;
 
 public class Projectile extends MovableEntity {
-    protected double damage;
+    protected double damage; 
 
 
     public Projectile(double startX, double startY, double targetX, double targetY) {
         super(startX, startY, 10, 10);
         this.x = startX;
         this.y = startY;
-        this.speed = 1.3;
+        this.speed = 2;
         setDirect(startX, startY, targetX, targetY);
     }
 

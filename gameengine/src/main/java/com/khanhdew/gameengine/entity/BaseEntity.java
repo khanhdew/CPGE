@@ -31,7 +31,7 @@ public abstract class BaseEntity {
     }
 
     // di chuyển
-    public void translateXY(int dx, int dy) {
+    public void translateXY(double dx, double dy) {
         this.x += dx;
         this.y += dy;
     }

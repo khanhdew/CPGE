@@ -16,6 +16,6 @@ public class Character extends MovableEntity implements CharacterBehavior {
 
     @Override
     public void shoot(double targetX, double targetY) {
-        projectileManager.add(this.x,this.y,targetX,targetY);
+        projectileManager.add(x + w/2,y + h/2,targetX,targetY);
     }
 }

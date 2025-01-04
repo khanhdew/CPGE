@@ -54,14 +54,20 @@ public class GameEngine {
 
     public void checkCollision() {
         // Kiểm tra va chạm giữa projectiles và enemies
-        player.getProjectileManager().getProjectiles().parallelStream().forEach(projectile -> {
-            if (projectile.isActive())
-                enemyManager.getEnemies().stream().filter(enemy -> enemy.isActive()&&isColliding(projectile, enemy)).forEach(enemy -> {
-//                enemy.takeDamage(projectile.getDamage());
-                    projectile.setActive(false);
-                    enemy.setActive(false);
-                });
-        });
+        synchronized (player.getProjectileManager().getProjectiles()) {
+            player.getProjectileManager().getProjectiles().forEach(projectile -> {
+                if (projectile.isActive()) {
+                    synchronized (enemyManager.getEnemies()) {
+                        enemyManager.getEnemies().stream()
+                                .filter(enemy -> enemy.isActive() && isColliding(projectile, enemy))
+                                .forEach(enemy -> {
+                                    projectile.setActive(false);
+                                    enemy.setActive(false);
+                                });
+                    }
+                }
+            });
+        }
 
 
         // Kiểm tra va chạm giữa player và enemies
