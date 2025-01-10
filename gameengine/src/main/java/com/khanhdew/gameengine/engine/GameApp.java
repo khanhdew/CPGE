@@ -1,28 +1,33 @@
 package com.khanhdew.gameengine.engine;
 
 import com.khanhdew.gameengine.config.GameConfiguration;
+import com.khanhdew.gameengine.engine.threading.AbstractRunnable;
+import com.khanhdew.gameengine.engine.threading.GameLogicRunnable;
+import com.khanhdew.gameengine.engine.threading.GameRenderRunnable;
+import com.khanhdew.gameengine.engine.threading.IoRunnable;
 import com.khanhdew.gameengine.utils.AudioManager;
 import com.khanhdew.gameengine.utils.InputHandler;
 
-import java.io.Serial;
-import java.io.Serializable;
+import lombok.Data;
+
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-
+@Data
 public class GameApp {
     private GameEngine gameEngine;
     private GameRenderer renderer;
     private InputHandler inputHandler;
     private AudioManager audioManager;
     private ExecutorService executorService = Executors.newCachedThreadPool();
-    private GameLogicThread gameLogicThread;
+    private List<AbstractRunnable> threads;
     private final GameConfiguration configuration = GameConfiguration.getInstance();
     private final double timePerFrame = configuration.getTimePerFrame();
     private final double timePerUpdate = configuration.getTimePerUpdate();
     public volatile static int fps = 0;
-    public volatile static int ups = 0;
 
     public GameApp() {
     }
@@ -32,7 +37,11 @@ public class GameApp {
         this.renderer = renderer;
         this.inputHandler = inputHandler;
         this.audioManager = audioManager;
-        gameLogicThread = new GameLogicThread();
+        threads = Arrays.asList(
+                new GameLogicRunnable(this)
+                , new GameRenderRunnable(this)
+                , new IoRunnable(this)
+        );
         gameEngine.getState().pauseGame();
         inputHandler.handleInput();
         gameEngine.spawnEnemyPerSecond(2, 1);
@@ -40,7 +49,7 @@ public class GameApp {
 
     public void update() {
         gameEngine.update();
-        inputHandler.handleRelease();
+//            renderer.draw();
     }
 
     public void start() {
@@ -49,7 +58,7 @@ public class GameApp {
     }
 
     private void submitThread() {
-        executorService.submit(gameLogicThread);
+        threads.forEach(t -> executorService.submit(t));
     }
 
     public void resume() {
@@ -70,90 +79,6 @@ public class GameApp {
         } catch (InterruptedException ie) {
             executorService.shutdownNow();
             Thread.currentThread().interrupt();
-        }
-    }
-
-    private class GameLogicThread extends Thread implements Serializable {
-        @Serial
-        private static final long serialVersionUID = 1L;
-
-        public GameLogicThread() {
-            super("gameLogicThread-" + serialVersionUID);
-            System.out.println("LogicThread created");
-        }
-
-        @Override
-        public void run() {
-            long previousTime = System.nanoTime();
-            long lastCheck = System.nanoTime(); // Dùng nanoTime để đảm bảo tính chính xác
-            double deltaU = 0;
-            int updates = 0;
-
-            boolean running = gameEngine.getState().isRunning();
-
-            while (running) {
-                long currentTime = System.nanoTime();
-                deltaU += (currentTime - previousTime) / timePerUpdate;
-                previousTime = currentTime;
-
-                // Cập nhật logic game nếu đủ thời gian cho một lần update
-                if (deltaU >= 1) {
-                    try {
-                        update();
-                    } catch (Exception e) {
-                        System.err.println("Error during update: " + e.getMessage());
-                        e.printStackTrace();
-                    }
-                    updates++;
-                    deltaU--;
-                }
-
-                // Kiểm tra UPS mỗi giây
-                if (System.nanoTime() - lastCheck >= 1_000_000_000) { // 1 giây = 1 tỷ nano giây
-                    lastCheck = System.nanoTime();
-                    ups = updates;
-                    updates = 0;
-                }
-
-                // Kiểm tra lại trạng thái running
-                running = gameEngine.getState().isRunning();
-            }
-        }
-
-    }
-
-    long previousTime = System.nanoTime();
-    int frames = 0;
-    long lastCheck = System.nanoTime(); // Sử dụng nanoTime thay vì currentTimeMillis
-    double deltaF = 0;
-
-    @SuppressWarnings("temporary code")
-    public void handleRender() {
-        try {
-            boolean running = gameEngine.getState().isRunning(); // Lưu trạng thái cục bộ
-            while (running) {
-                long currentTime = System.nanoTime();
-                deltaF += (currentTime - previousTime) / timePerFrame;
-                previousTime = currentTime;
-
-                if (deltaF >= 1) {
-                    renderer.draw(); // Render frame
-                    frames++;
-                    deltaF--;
-                }
-
-                if (System.nanoTime() - lastCheck >= 1_000_000_000) { // Kiểm tra mỗi giây
-                    lastCheck = System.nanoTime();
-                    fps = frames;
-                    frames = 0;
-                }
-
-                // Cập nhật trạng thái trong vòng lặp
-                running = gameEngine.getState().isRunning();
-            }
-        } catch (Exception e) {
-            System.err.println("Render thread encountered an error: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 

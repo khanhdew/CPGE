@@ -5,9 +5,6 @@ plugins {
 group = 'com.khanhdew'
 version = 'unspecified'
 
-repositories {
-    mavenCentral()
-}
 
 dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.36'

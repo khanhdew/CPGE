@@ -20,7 +20,6 @@ public class DesktopRenderer implements GameRenderer {
 
     GraphicsContext gc;
     Image[][] playerAnimations;
-    Rectangle2D playerRect;
     Image playerImg;
     Player player;
     GameEngine gameEngine;
@@ -76,7 +75,7 @@ public class DesktopRenderer implements GameRenderer {
     }
 
     private void drawPlayer() {
-        player = gameEngine.getPlayer();
+//        player = gameEngine.getPlayer();
 //        if (playerImg != null) {
 //            gc.drawImage(playerImg, player.getX(), player.getY());
 //        }

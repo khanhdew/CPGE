@@ -21,9 +21,9 @@ public class HelloApplication extends Application {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (!newValue) {
-                    gamePane.windowFocusLost();
+//                    gamePane.windowFocusLost();
                 } else {
-                    gamePane.getGameApp().resume();
+//                    gamePane.getGameApp().resume();
                 }
             }
         });
@@ -31,6 +31,7 @@ public class HelloApplication extends Application {
             @Override
             public void handle(WindowEvent event) {
                 System.out.println("App closed");
+                gamePane.getGameApp().getExecutorService().shutdown();
                 try {
                     System.exit(0);
                 } catch (Exception e) {

@@ -28,38 +28,6 @@ public class GamePane extends BorderPane {
         setupPane();
         setupCanvas();
         init();
-        new AnimationTimer() {
-            private long previousTime = System.nanoTime();
-            private int frames = 0;
-            private long lastCheck = System.nanoTime();
-            private double deltaF = 0;
-
-            @Override
-            public void handle(long currentTime) {
-                try {
-                    boolean running = gameEngine.getState().isRunning();
-                    if (running) {
-                        deltaF += (currentTime - previousTime) / GameConfiguration.getInstance().getTimePerFrame();
-                        previousTime = currentTime;
-
-                        if (deltaF >= 1) {
-                            renderer.draw();
-                            frames++;
-                            deltaF--;
-                        }
-
-                        if (System.nanoTime() - lastCheck >= 1_000_000_000) {
-                            lastCheck = System.nanoTime();
-                            GameApp.fps = frames;
-                            frames = 0;
-                        }
-                    }
-                } catch (Exception e) {
-                    System.err.println("Render thread encountered an error: " + e.getMessage());
-                    e.printStackTrace();
-                }
-            }
-        }.start();
     }
 
     private void init() {

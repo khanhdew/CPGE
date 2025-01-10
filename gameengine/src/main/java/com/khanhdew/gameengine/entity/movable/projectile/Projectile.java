@@ -10,7 +10,7 @@ public class Projectile extends MovableEntity {
         super(startX, startY, 10, 10);
         this.x = startX;
         this.y = startY;
-        this.speed = 2;
+        this.speed = 5;
         setDirect(startX, startY, targetX, targetY);
     }
 

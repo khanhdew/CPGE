@@ -16,6 +16,14 @@ public class GameConfiguration {
     private double timePerUpdate;
     private boolean SHOW_FPS = true;
 
+    public GameConfiguration(int windowWidth, int windowHeight, double windowScale){
+        this.windowWidth = windowWidth;
+        this.windowHeight = windowHeight;
+        this.windowScale = windowScale;
+        timePerFrame = 1000000000.0 / FPS;
+        timePerUpdate = 1000000000.0 / UPS;
+    }
+
     public GameConfiguration() {
         timePerFrame = 1000000000.0 / FPS;
         timePerUpdate = 1000000000.0 / UPS;

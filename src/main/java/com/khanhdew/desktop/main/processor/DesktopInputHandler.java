@@ -39,6 +39,7 @@ public class DesktopInputHandler implements InputHandler {
         if (!keyHandler.isKeyReleased()) {
             keyHandler.updatePlayerMovement();
         }
+
     }
 
 

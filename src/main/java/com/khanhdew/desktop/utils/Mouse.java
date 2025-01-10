@@ -9,7 +9,6 @@ import java.util.concurrent.Executors;
 
 public class Mouse {
     private GamePane gamePane;
-    private ExecutorService executorService;
 
     public Mouse(GamePane gamePane) {
         this.gamePane = gamePane;

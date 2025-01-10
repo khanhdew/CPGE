@@ -6,6 +6,7 @@ import com.khanhdew.gameengine.entity.movable.enemy.Enemy;
 import com.khanhdew.gameengine.entity.movable.enemy.EnemyManager;
 import com.khanhdew.gameengine.entity.movable.player.Player;
 import com.khanhdew.gameengine.entity.movable.projectile.Projectile;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -34,10 +35,10 @@ public class GameEngine {
 
     private synchronized void spawnEnemy(int numberOfEnemies) {
         for (int i = 0; i < numberOfEnemies; i++) {
-            int x = random.nextInt(0, GameConfiguration.getInstance().getWindowWidth());
-            int y = random.nextInt(0, GameConfiguration.getInstance().getWindowHeight());
-            int w = random.nextInt(50, 200);
-            int h = random.nextInt(50, 200);
+            int x = random.nextInt(GameConfiguration.getInstance().getWindowWidth());
+            int y = random.nextInt(GameConfiguration.getInstance().getWindowHeight());
+            int w = random.nextInt(200);
+            int h = random.nextInt(200);
             enemyManager.add(x, y, w, h);
         }
     }
