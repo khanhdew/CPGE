@@ -16,6 +16,7 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
         GamePane gamePane = new GamePane();
         GameScene gameScene = new GameScene(gamePane);
+
         // xu ly lost focus
         stage.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
@@ -46,6 +47,7 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
+        System.setProperty("prism.order", "sw");
         launch();
     }
 }
