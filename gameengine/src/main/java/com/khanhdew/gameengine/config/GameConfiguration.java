@@ -7,8 +7,8 @@ import lombok.Setter;
 @Getter
 public class GameConfiguration {
     private static GameConfiguration instance;
-    private int windowWidth = 1200;
-    private int windowHeight = 800;
+    private int windowWidth = 2305;
+    private int windowHeight = 1035;
     private double windowScale = (double) 16 / 9;
     private int FPS = 120;
     private int UPS = 200;

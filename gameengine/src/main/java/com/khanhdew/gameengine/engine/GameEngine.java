@@ -35,6 +35,7 @@ public class GameEngine {
 
     private synchronized void spawnEnemy(int numberOfEnemies) {
         for (int i = 0; i < numberOfEnemies; i++) {
+            System.out.println(GameConfiguration.getInstance().getWindowWidth() + " " + GameConfiguration.getInstance().getWindowHeight());
             int x = random.nextInt(GameConfiguration.getInstance().getWindowWidth());
             int y = random.nextInt(GameConfiguration.getInstance().getWindowHeight());
             int w = random.nextInt(200);

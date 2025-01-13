@@ -8,14 +8,22 @@ pluginManagement {
     repositories {
         mavenCentral()
         gradlePluginPortal()
+//        google {
+//            content {
+//                includeGroupByRegex("com\\.android.*")
+//                includeGroupByRegex("com\\.google.*")
+//                includeGroupByRegex("androidx.*")
+//            }
+//        }
     }
 }
 
 dependencyResolutionManagement {
     repositories {
         mavenCentral()
+//        google()
     }
 }
-rootProject.name = 'JavaFx'
-include 'gameengine'
+rootProject.name = 'CPGE'
+include ('gameengine','desktop')
 
