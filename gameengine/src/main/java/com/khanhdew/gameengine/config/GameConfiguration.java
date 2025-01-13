@@ -10,7 +10,7 @@ public class GameConfiguration {
     private int windowWidth = 2305;
     private int windowHeight = 1035;
     private double windowScale = (double) 16 / 9;
-    private int FPS = 120;
+    private int FPS = 60;
     private int UPS = 200;
     private double timePerFrame;
     private double timePerUpdate;
