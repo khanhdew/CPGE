@@ -5,29 +5,22 @@ import android.graphics.Paint;
 import android.view.MotionEvent;
 
 import com.khanhdew.android.main.GamePanel;
+import com.khanhdew.gameengine.config.GameConfiguration;
 import com.khanhdew.gameengine.entity.movable.player.Player;
 
-public abstract class UIComponent implements UIRender{
+public abstract class UIComponent {
     protected GamePanel gamePanel;
+    protected GameConfiguration gameConfiguration = GameConfiguration.getInstance();
     protected Player player;
     protected float xCenter;
     protected float yCenter;
     protected float r;
     protected Paint paint;
 
-    public UIComponent(float xCenter, float yCenter, float r) {
-        this.xCenter = xCenter;
-        this.yCenter = yCenter;
-        this.r = r;
-        this.paint = new Paint();
-    }
 
-    public UIComponent(GamePanel gamePanel, float xCenter, float yCenter, float r) {
+    public UIComponent(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
         this.player = gamePanel.getGameApp().getGameEngine().getPlayer();
-        this.xCenter = xCenter;
-        this.yCenter = yCenter;
-        this.r = r;
         this.paint = new Paint();
     }
 
@@ -46,5 +39,8 @@ public abstract class UIComponent implements UIRender{
         }
     }
 
-    public abstract boolean touchEvent(MotionEvent event);
+    public boolean touchEvent(MotionEvent event){
+        return false;
+    };
+
 }

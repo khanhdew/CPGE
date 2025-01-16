@@ -8,36 +8,34 @@ import android.view.SurfaceHolder;
 
 import androidx.annotation.NonNull;
 
-import com.khanhdew.android.utils.input.AttackButton;
-import com.khanhdew.android.utils.input.Joystick;
-import com.khanhdew.android.utils.input.UIRender;
+import com.khanhdew.android.utils.input.UIComponent;
 import com.khanhdew.gameengine.config.GameConfiguration;
 import com.khanhdew.gameengine.engine.GameApp;
 import com.khanhdew.gameengine.engine.GameEngine;
 import com.khanhdew.gameengine.engine.GameRenderer;
 import com.khanhdew.gameengine.entity.BaseEntity;
 import com.khanhdew.gameengine.entity.movable.player.Player;
+import com.khanhdew.gameengine.utils.Camera;
 
 import java.util.List;
 
-public class AndroidRenderer implements GameRenderer , SurfaceHolder.Callback{
+public class AndroidRenderer implements GameRenderer, SurfaceHolder.Callback {
     private final GameEngine gameEngine;
     private final Player player;
     private final Paint paint;
     private final SurfaceHolder holder;
 
-    private final List<UIRender> uiComponents;
+    private final Camera camera;
+    private final List<UIComponent> uiComponents;
 
-    public AndroidRenderer(GameEngine gameEngine, SurfaceHolder holder) {
+    public AndroidRenderer(GameEngine gameEngine, SurfaceHolder holder, List<UIComponent> uiComponents) {
         this.gameEngine = gameEngine;
         this.player = gameEngine.getPlayer();
+        this.camera = new Camera(player);
+        this.uiComponents = uiComponents;
         this.paint = new Paint();
         this.holder = holder;
         this.holder.addCallback(this);
-        uiComponents = List.of(
-                new Joystick(),
-                new AttackButton()
-        );
     }
 
     @Override
@@ -47,12 +45,12 @@ public class AndroidRenderer implements GameRenderer , SurfaceHolder.Callback{
             canvas = holder.lockCanvas();
             if (canvas != null) {
                 canvas.drawColor(Color.WHITE);
-                drawPlayer(canvas);
+                camera.update();
                 drawEnemy(canvas);
+                drawPlayer(canvas);
                 drawProjectile(canvas);
                 drawUIComponents(canvas);
                 showFPS(canvas);
-
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -64,7 +62,7 @@ public class AndroidRenderer implements GameRenderer , SurfaceHolder.Callback{
     }
 
     private void drawUIComponents(Canvas canvas) {
-        for (UIRender uiComponent : uiComponents) {
+        for (UIComponent uiComponent : uiComponents) {
             uiComponent.draw(canvas);
         }
     }
@@ -72,8 +70,11 @@ public class AndroidRenderer implements GameRenderer , SurfaceHolder.Callback{
 
     public void drawPlayer(Canvas canvas) {
         paint.setColor(Color.BLACK);
-        canvas.drawRect(new RectF((float) player.getX(), (float) player.getY(),
-                (float) (player.getX() + player.getW()), (float) (player.getY() + player.getH())), paint);
+        canvas.drawRect(new RectF(
+                (float) (player.getX() - camera.getX()),
+                (float) (player.getY() - camera.getY()),
+                (float) ((player.getX() + player.getW()) - camera.getX()),
+                (float) ((player.getY() + player.getH()) - camera.getY())), paint);
     }
 
 
@@ -82,8 +83,11 @@ public class AndroidRenderer implements GameRenderer , SurfaceHolder.Callback{
         synchronized (gameEngine.getEnemyManager().getEnemies()) {
             for (BaseEntity enemy : gameEngine.getEnemyManager().getEnemies()) {
                 if (enemy.isActive()) {
-                    canvas.drawRect(new RectF((float) enemy.getX(), (float) enemy.getY(),
-                            (float) (enemy.getX() + enemy.getW()), (float) (enemy.getY() + enemy.getH())), paint);
+                    canvas.drawRect(new RectF(
+                            (float) (enemy.getX() - camera.getX()),
+                            (float) (enemy.getY() - camera.getY()),
+                            (float) ((enemy.getX() + enemy.getW()) - camera.getX()),
+                            (float) ((enemy.getY() + enemy.getH()) - camera.getY())), paint);
                 }
             }
         }
@@ -95,8 +99,11 @@ public class AndroidRenderer implements GameRenderer , SurfaceHolder.Callback{
         synchronized (player.getProjectileManager().getProjectiles()) {
             for (BaseEntity projectile : player.getProjectileManager().getProjectiles()) {
                 if (projectile.isActive()) {
-                    canvas.drawRect(new RectF((float) projectile.getX(), (float) projectile.getY(),
-                            (float) (projectile.getX() + projectile.getW()), (float) (projectile.getY() + projectile.getH())), paint);
+                    canvas.drawRect(new RectF(
+                            (float)( projectile.getX() - camera.getX()),
+                            (float) (projectile.getY() - camera.getY()),
+                            (float) ((projectile.getX() + projectile.getW()) - camera.getX()),
+                            (float) ((projectile.getY() + projectile.getH()) - camera.getY())), paint);
                 }
             }
         }
@@ -107,12 +114,7 @@ public class AndroidRenderer implements GameRenderer , SurfaceHolder.Callback{
         if (GameConfiguration.getInstance().isSHOW_FPS()) {
             paint.setColor(Color.BLACK);
             paint.setTextSize(50);
-            canvas.drawText("FPS: " + GameApp.fps, 0, 50, paint);
-//            canvas.drawLine(0, 100, GameConfiguration.getInstance().getWindowWidth(), 100, paint);
-//            canvas.drawLine(100,0,100,GameConfiguration.getInstance().getWindowHeight(),paint);
-//            canvas.drawLine(GameConfiguration.getInstance().getWindowWidth()-100,0,GameConfiguration.getInstance().getWindowWidth()-100,GameConfiguration.getInstance().getWindowHeight(),paint);
-            canvas.drawLine(0,GameConfiguration.getInstance().getWindowHeight(),GameConfiguration.getInstance().getWindowWidth(),GameConfiguration.getInstance().getWindowHeight(),paint);
-//            canvas.drawRect(0,0,GameConfiguration.getInstance().getWindowWidth(),GameConfiguration.getInstance().getWindowHeight(),paint);
+            canvas.drawText("FPS: " + GameApp.fps, 50, 50, paint);
         }
     }
 

@@ -1,19 +1,37 @@
 package com.khanhdew.android.utils.input;
 
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.view.MotionEvent;
 
 import com.khanhdew.android.main.GamePanel;
 
-public class AttackButton extends UIComponent{
+public class AttackButton extends Joystick {
+    private InnerCircle innerCircle;
+    private float dx;
+    private float dy;
+    private boolean touchDown;
 
-    public AttackButton() {
-        super(2100, 800, 120);
-        paint.setColor(Color.GREEN);
-    }
     public AttackButton(GamePanel gamePanel) {
-        super(gamePanel, 2100, 800, 120);
-        paint.setColor(Color.GREEN);
+        super(gamePanel);
+        init();
+    }
+
+    private void init() {
+        xCenter = 2100;
+        yCenter = 800;
+        r = 150;
+        innerCircle = new InnerCircle(gamePanel, 200, 800, 80);
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
+        if (touchDown) {
+//            innerCircle.draw(canvas);
+            player.shoot(dx, dy);
+        }
     }
 
     @Override
@@ -22,11 +40,18 @@ public class AttackButton extends UIComponent{
             case MotionEvent.ACTION_MOVE:
                 float x = event.getX();
                 float y = event.getY();
-                float dx =(float) ((x - xCenter) * player.getX());
-                float dy =(float) ((y - yCenter) * player.getY());
                 onTouch(event, () -> {
-                    player.shoot(dx , dy);
+                    touchDown = true;
+                    innerCircle.setX(x);
+                    innerCircle.setY(y);
                 });
+                dx = (float) ((x - xCenter) * player.getX());
+                dy = (float) ((y - yCenter) * player.getY());
+                break;
+            case MotionEvent.ACTION_UP:
+                touchDown = false;
+                innerCircle.setX(xCenter);
+                innerCircle.setY(yCenter);
                 break;
         }
         return true;

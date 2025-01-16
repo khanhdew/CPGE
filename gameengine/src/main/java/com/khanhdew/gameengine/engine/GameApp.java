@@ -58,7 +58,9 @@ public class GameApp {
     }
 
     private void submitThread() {
-        threads.forEach(t -> executorService.submit(t));
+        if (!executorService.isShutdown()) {
+            threads.forEach(t -> executorService.submit(t));
+        }
     }
 
     public void resume() {

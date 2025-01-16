@@ -43,15 +43,15 @@ public class ProjectileManager implements EntityManager {
 
     @Override
     public void remove() {
-        for (int i = projectiles.size() - 1; i >= 0; i--) {
-            Projectile projectile = projectiles.get(i);
-            if (projectile.getX() < 0
-                    || projectile.getX() > configuration.getWindowWidth()
-                    || projectile.getY() < 0
-                    || projectile.getY() > configuration.getWindowHeight()) {
-                projectile.setActive(false);
-            }
-        }
+//        for (int i = projectiles.size() - 1; i >= 0; i--) {
+//            Projectile projectile = projectiles.get(i);
+//            if (projectile.getX() < 0
+//                    || projectile.getX() > configuration.getWindowWidth()
+//                    || projectile.getY() < 0
+//                    || projectile.getY() > configuration.getWindowHeight()) {
+//                projectile.setActive(false);
+//            }
+//        }
     }
 
 }
