@@ -49,11 +49,13 @@ public class GameApp {
 
     public void update() {
         gameEngine.update();
-//            renderer.draw();
     }
 
     public void start() {
         gameEngine.getState().resumeGame();
+        if (executorService.isShutdown() || executorService.isTerminated()) {
+            executorService = Executors.newCachedThreadPool();
+        }
         submitThread();
     }
 

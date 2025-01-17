@@ -1,5 +1,7 @@
 package com.khanhdew.gameengine.entity;
 
+import com.khanhdew.gameengine.config.GameConfiguration;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +13,7 @@ public abstract class BaseEntity {
     protected double w;
     protected double h;
     protected boolean active;
+    protected GameConfiguration configuration = GameConfiguration.getInstance();
 
     public BaseEntity(double x, double y, double w, double h) {
         this.x = x;
@@ -35,5 +38,7 @@ public abstract class BaseEntity {
         this.x += dx;
         this.y += dy;
     }
+
+
 
 }

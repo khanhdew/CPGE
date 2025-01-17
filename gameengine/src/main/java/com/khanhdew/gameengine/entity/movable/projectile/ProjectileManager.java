@@ -34,7 +34,8 @@ public class ProjectileManager implements EntityManager {
         if (inactiveProjectile.isPresent()) {
             Projectile e = inactiveProjectile.get();
             e.setActive(true);
-            e.setDirect(playerX, playerY, targetX, targetY);
+            e.reset(playerX, playerY, targetX, targetY);
+
         } else {
             // Nếu không có projectile nào không hoạt động, tạo mới
             projectiles.add(new Projectile(playerX, playerY, targetX, targetY));

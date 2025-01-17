@@ -10,10 +10,7 @@ import androidx.annotation.NonNull;
 import com.khanhdew.android.audio.AudioPlayer;
 import com.khanhdew.android.main.processor.AndroidInputHandler;
 import com.khanhdew.android.main.processor.AndroidRenderer;
-import com.khanhdew.android.utils.input.AttackButton;
-import com.khanhdew.android.utils.input.Joystick;
 import com.khanhdew.android.utils.input.UIComponent;
-import com.khanhdew.gameengine.config.GameConfiguration;
 import com.khanhdew.gameengine.engine.GameApp;
 import com.khanhdew.gameengine.engine.GameEngine;
 
@@ -23,7 +20,6 @@ import java.util.List;
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     private final GameApp gameApp;
-    private final GameConfiguration gameConfiguration;
     private final GameEngine gameEngine;
     private final AndroidInputHandler inputHandler;
 
@@ -38,7 +34,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         super(context);
         holder = getHolder();
         holder.addCallback(this);
-        gameConfiguration = GameConfiguration.getInstance();
         audioPlayer = new AudioPlayer();
         gameEngine = new GameEngine();
         inputHandler = new AndroidInputHandler(gameEngine, this);
@@ -66,9 +61,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if(inputHandler.getJoystick() != null){
-            return inputHandler.getJoystick().touchEvent(event);
-        }
+//        if(inputHandler.getJoystick() != null){
+//            return inputHandler.getJoystick().touchEvent(event);
+//        }
         return super.onTouchEvent(event);
     }
 

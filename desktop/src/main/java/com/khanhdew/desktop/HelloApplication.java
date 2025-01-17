@@ -2,6 +2,7 @@ package com.khanhdew.desktop;
 
 import com.khanhdew.desktop.main.GamePane;
 import com.khanhdew.desktop.main.GameScene;
+import com.khanhdew.gameengine.config.GameConfiguration;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -14,6 +15,12 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
+        // get window size
+
+
+        double windowWidth = stage.getWidth();
+        double windowHeight = stage.getHeight();
+        GameConfiguration configuration = new GameConfiguration((int) windowWidth, (int) windowHeight);
         GamePane gamePane = new GamePane();
         GameScene gameScene = new GameScene(gamePane);
 

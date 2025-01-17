@@ -8,6 +8,7 @@ import com.khanhdew.gameengine.engine.GameRenderer;
 import com.khanhdew.gameengine.entity.BaseEntity;
 import com.khanhdew.gameengine.entity.movable.player.Player;
 import com.khanhdew.gameengine.entity.movable.projectile.Projectile;
+import com.khanhdew.gameengine.utils.Camera;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -22,11 +23,13 @@ public class DesktopRenderer implements GameRenderer {
     Image playerImg;
     Player player;
     GameEngine gameEngine;
+    Camera camera;
 
     public DesktopRenderer(Canvas canvas, GameEngine gameEngine) {
         gc = canvas.getGraphicsContext2D();
         this.gameEngine = gameEngine;
         player = gameEngine.getPlayer();
+        camera = new Camera(player);
         loadPlayerImage();
 
     }
@@ -49,16 +52,16 @@ public class DesktopRenderer implements GameRenderer {
     public void draw() {
         drawEnemies();
         showFPS();
+        camera.update();
         drawPlayer();
         drawProjectiles();
-
     }
 
     private void drawProjectiles() {
         for (Projectile entity : player.getProjectileManager().getProjectiles()) {
             if (entity.isActive()) {
                 gc.setFill(Color.BLUE); // Set the color for projectiles
-                gc.fillRect(entity.getX(), entity.getY(), entity.getW(), entity.getH());
+                drawEntity(gc, entity);
             }
         }
     }
@@ -68,7 +71,7 @@ public class DesktopRenderer implements GameRenderer {
         for (BaseEntity entity : gameEngine.getEnemyManager().getEnemies()) {
             if (entity.isActive()) {
                 gc.setFill(Color.RED);
-                gc.fillRect(entity.getX(), entity.getY(), entity.getW(), entity.getH());
+                drawEntity(gc, entity);
             }
         }
     }
@@ -79,7 +82,15 @@ public class DesktopRenderer implements GameRenderer {
 //            gc.drawImage(playerImg, player.getX(), player.getY());
 //        }
         gc.setFill(Color.BLACK);
-        gc.fillRect(player.getX(), player.getY(), player.getW(), player.getH());
+        drawEntity(gc, player);
+    }
+
+    private void drawEntity(GraphicsContext gc, BaseEntity entity) {
+        gc.fillRect(
+                (float) (entity.getX() - camera.getX()),
+                (float) (entity.getY() - camera.getY()),
+                (float) (entity.getW()),
+                (float) (entity.getH()));
     }
 
     private void showFPS() {

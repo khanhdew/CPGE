@@ -1,9 +1,12 @@
 package com.khanhdew.android.main.processor;
 
+import static android.content.ContentValues.TAG;
+
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.util.Log;
 import android.view.SurfaceHolder;
 
 import androidx.annotation.NonNull;
@@ -24,7 +27,6 @@ public class AndroidRenderer implements GameRenderer, SurfaceHolder.Callback {
     private final Player player;
     private final Paint paint;
     private final SurfaceHolder holder;
-
     private final Camera camera;
     private final List<UIComponent> uiComponents;
 
@@ -53,7 +55,7 @@ public class AndroidRenderer implements GameRenderer, SurfaceHolder.Callback {
                 showFPS(canvas);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, "draw: ", e);
         } finally {
             if (canvas != null) {
                 holder.unlockCanvasAndPost(canvas);
@@ -70,11 +72,15 @@ public class AndroidRenderer implements GameRenderer, SurfaceHolder.Callback {
 
     public void drawPlayer(Canvas canvas) {
         paint.setColor(Color.BLACK);
-        canvas.drawRect(new RectF(
-                (float) (player.getX() - camera.getX()),
-                (float) (player.getY() - camera.getY()),
-                (float) ((player.getX() + player.getW()) - camera.getX()),
-                (float) ((player.getY() + player.getH()) - camera.getY())), paint);
+        drawEntity(canvas, player);
+    }
+
+    private void drawEntity(Canvas canvas, BaseEntity entity) {
+        if(camera.isInView((float) entity.getX(), (float) entity.getY(), (float) entity.getW(), (float) entity.getH())) {
+            RectF rect = new RectF((float) (entity.getX() - camera.getX()), (float) (entity.getY() - camera.getY()),
+                    (float) (entity.getX() + entity.getW() - camera.getX()), (float) (entity.getY() + entity.getH() - camera.getY()));
+            canvas.drawRect(rect, paint);
+        }
     }
 
 
@@ -83,11 +89,7 @@ public class AndroidRenderer implements GameRenderer, SurfaceHolder.Callback {
         synchronized (gameEngine.getEnemyManager().getEnemies()) {
             for (BaseEntity enemy : gameEngine.getEnemyManager().getEnemies()) {
                 if (enemy.isActive()) {
-                    canvas.drawRect(new RectF(
-                            (float) (enemy.getX() - camera.getX()),
-                            (float) (enemy.getY() - camera.getY()),
-                            (float) ((enemy.getX() + enemy.getW()) - camera.getX()),
-                            (float) ((enemy.getY() + enemy.getH()) - camera.getY())), paint);
+                    drawEntity(canvas, enemy);
                 }
             }
         }
@@ -99,11 +101,7 @@ public class AndroidRenderer implements GameRenderer, SurfaceHolder.Callback {
         synchronized (player.getProjectileManager().getProjectiles()) {
             for (BaseEntity projectile : player.getProjectileManager().getProjectiles()) {
                 if (projectile.isActive()) {
-                    canvas.drawRect(new RectF(
-                            (float)( projectile.getX() - camera.getX()),
-                            (float) (projectile.getY() - camera.getY()),
-                            (float) ((projectile.getX() + projectile.getW()) - camera.getX()),
-                            (float) ((projectile.getY() + projectile.getH()) - camera.getY())), paint);
+                    drawEntity(canvas, projectile);
                 }
             }
         }

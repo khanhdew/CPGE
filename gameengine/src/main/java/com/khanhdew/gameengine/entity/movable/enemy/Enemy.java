@@ -15,13 +15,13 @@ public class Enemy extends Character {
         // Update position
         x += vX;
         y += vY;
-
         // Check for collision with window boundaries and reverse direction if necessary
-        if (x <= 0 || x + w >= GameConfiguration.getInstance().getWindowWidth()) {
+        if (x <= 0 || x + w >= configuration.getWindowWidth()) {
             vX = -vX;
         }
-        if (y <= 0 || y + h >= GameConfiguration.getInstance().getWindowHeight()) {
+        if (y <= 0 || y + h >= configuration.getWindowHeight()) {
             vY = -vY;
         }
+
     }
 }

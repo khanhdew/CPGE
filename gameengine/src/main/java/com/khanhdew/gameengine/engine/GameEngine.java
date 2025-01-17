@@ -5,6 +5,7 @@ import com.khanhdew.gameengine.entity.BaseEntity;
 import com.khanhdew.gameengine.entity.movable.enemy.Enemy;
 import com.khanhdew.gameengine.entity.movable.enemy.EnemyManager;
 import com.khanhdew.gameengine.entity.movable.player.Player;
+import com.khanhdew.gameengine.entity.movable.player.PlayerManager;
 import com.khanhdew.gameengine.entity.movable.projectile.Projectile;
 
 import lombok.Getter;
@@ -21,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 @Getter
 public class GameEngine {
     private EnemyManager enemyManager;
+    private PlayerManager playerManager;
     private GameState state;
     private Player player;
     private Random random;
@@ -28,9 +30,10 @@ public class GameEngine {
     public GameEngine() {
         random = new Random();
         enemyManager = new EnemyManager();
+        playerManager = new PlayerManager();
+        player = playerManager.getPlayer();
         spawnEnemy(10);
         state = GameState.getInstance();
-        player = new Player(900, 100, 50, 50);
     }
 
     private synchronized void spawnEnemy(int numberOfEnemies) {
