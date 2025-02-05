@@ -23,5 +23,8 @@ public class Enemy extends Character {
             vY = -vY;
         }
 
+        if (health <= 0) {
+            active = false;
+        }
     }
 }

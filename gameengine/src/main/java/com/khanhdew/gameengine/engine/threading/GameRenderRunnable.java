@@ -37,7 +37,7 @@ public class GameRenderRunnable extends AbstractRunnable {
 
                 if (System.nanoTime() - lastCheck >= 1_000_000_000) { // Kiểm tra mỗi giây
                     lastCheck = System.nanoTime();
-                    GameApp.fps = frames;
+                    GameApp.fps.set(frames);
                     frames = 0;
                 }
 

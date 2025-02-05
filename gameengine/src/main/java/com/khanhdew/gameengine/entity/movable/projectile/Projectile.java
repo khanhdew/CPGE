@@ -2,8 +2,11 @@ package com.khanhdew.gameengine.entity.movable.projectile;
 
 import com.khanhdew.gameengine.entity.movable.MovableEntity;
 
+import lombok.Getter;
+
+@Getter
 public class Projectile extends MovableEntity {
-    protected double damage;
+    protected double damage = 10;
     protected double range;
 
     public Projectile(double startX, double startY, double targetX, double targetY) {

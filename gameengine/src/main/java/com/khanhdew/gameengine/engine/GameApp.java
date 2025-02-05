@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Data
 public class GameApp {
@@ -27,7 +28,7 @@ public class GameApp {
     private final GameConfiguration configuration = GameConfiguration.getInstance();
     private final double timePerFrame = configuration.getTimePerFrame();
     private final double timePerUpdate = configuration.getTimePerUpdate();
-    public volatile static int fps = 0;
+    public static AtomicInteger fps = new AtomicInteger(0);
 
     public GameApp() {
     }

@@ -66,7 +66,8 @@ public class GameEngine {
                                 .filter(enemy -> enemy.isActive() && isColliding(projectile, enemy))
                                 .forEach(enemy -> {
                                     projectile.setActive(false);
-                                    enemy.setActive(false);
+//                                    enemy.setActive(false);
+                                     enemy.takeDamage(projectile.getDamage());
                                 });
                     }
                 }

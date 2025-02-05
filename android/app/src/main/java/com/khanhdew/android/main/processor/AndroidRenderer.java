@@ -30,6 +30,8 @@ public class AndroidRenderer implements GameRenderer, SurfaceHolder.Callback {
     private final Camera camera;
     private final List<UIComponent> uiComponents;
 
+    private static final String TAG = "AndroidRenderer";
+
     public AndroidRenderer(GameEngine gameEngine, SurfaceHolder holder, List<UIComponent> uiComponents) {
         this.gameEngine = gameEngine;
         this.player = gameEngine.getPlayer();
@@ -76,7 +78,7 @@ public class AndroidRenderer implements GameRenderer, SurfaceHolder.Callback {
     }
 
     private void drawEntity(Canvas canvas, BaseEntity entity) {
-        if(camera.isInView((float) entity.getX(), (float) entity.getY(), (float) entity.getW(), (float) entity.getH())) {
+        if (camera.isInView((float) entity.getX(), (float) entity.getY(), (float) entity.getW(), (float) entity.getH())) {
             RectF rect = new RectF((float) (entity.getX() - camera.getX()), (float) (entity.getY() - camera.getY()),
                     (float) (entity.getX() + entity.getW() - camera.getX()), (float) (entity.getY() + entity.getH() - camera.getY()));
             canvas.drawRect(rect, paint);
@@ -113,6 +115,8 @@ public class AndroidRenderer implements GameRenderer, SurfaceHolder.Callback {
             paint.setColor(Color.BLACK);
             paint.setTextSize(50);
             canvas.drawText("FPS: " + GameApp.fps, 50, 50, paint);
+            canvas.drawText("Player x: " + player.getX(), 50, 100, paint);
+            canvas.drawText("Player y: " + player.getY(), 50, 150, paint);
         }
     }
 

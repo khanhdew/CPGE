@@ -2,6 +2,9 @@ package com.khanhdew.gameengine.entity.movable;
 
 import com.khanhdew.gameengine.entity.BaseEntity;
 
+import lombok.Getter;
+
+@Getter
 public abstract class MovableEntity extends BaseEntity {
     protected double speed = 1;
     protected double vX, vY;

@@ -6,8 +6,9 @@ import lombok.Getter;
 
 @Getter
 public class Character extends MovableEntity implements CharacterBehavior {
-    private final ProjectileManager projectileManager;
-    private Weapon weapon;
+    protected final ProjectileManager projectileManager;
+    protected Weapon weapon;
+    protected double health = 100;
 
     public Character(double x, double y, double w, double h) {
         super(x, y, w, h);
@@ -17,5 +18,10 @@ public class Character extends MovableEntity implements CharacterBehavior {
     @Override
     public void shoot(double targetX, double targetY) {
         projectileManager.add(x + w/2,y + h/2,targetX,targetY);
+    }
+
+    public void takeDamage(double damage) {
+        health -= damage;
+        speed = 5;
     }
 }
