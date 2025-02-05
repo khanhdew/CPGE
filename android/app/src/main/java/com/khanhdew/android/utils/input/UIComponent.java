@@ -15,6 +15,7 @@ public abstract class UIComponent {
     protected float xCenter;
     protected float yCenter;
     protected float r;
+    public int pointerId;
     protected Paint paint;
 
 
@@ -28,18 +29,19 @@ public abstract class UIComponent {
         canvas.drawCircle(xCenter, yCenter, r, paint);
     }
 
-    public void onTouch(MotionEvent event, Runnable action){
-        float x = event.getX();
-        float y = event.getY();
+    public boolean onTouch(float x, float y, int pointerId) {
         float a = Math.abs(x - xCenter);
         float b = Math.abs(y - yCenter);
         float c = (float) Math.hypot(a, b);
-        if (c <= r) {
-            action.run();
+        if (this.pointerId == pointerId || c <= r) {
+            this.pointerId = pointerId;
+            return true;
         }
+        return false;
     }
 
-    public boolean touchEvent(MotionEvent event){
+
+    public boolean touchEvent(MotionEvent event, int pointerId){
         return false;
     };
 
