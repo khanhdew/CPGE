@@ -24,7 +24,7 @@ public class GameState {
 
     public synchronized static GameState getInstance(){
         if(instance == null)
-            return new GameState();
-        return getInstance();
+            instance = new GameState();
+        return instance;
     }
 }

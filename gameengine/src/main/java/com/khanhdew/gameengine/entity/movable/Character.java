@@ -20,6 +20,10 @@ public class Character extends MovableEntity implements CharacterBehavior {
         projectileManager.add(x + w/2,y + h/2,targetX,targetY);
     }
 
+    public void shoot(double angle){
+        projectileManager.add(x + w/2, y + h/2, angle, 0);
+    }
+
     public void takeDamage(double damage) {
         health -= damage;
         speed = 5;

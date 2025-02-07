@@ -100,8 +100,8 @@ public class AndroidRenderer implements GameRenderer, SurfaceHolder.Callback {
 
     public void drawProjectile(Canvas canvas) {
         paint.setColor(Color.BLUE);
-        synchronized (player.getProjectileManager().getProjectiles()) {
-            for (BaseEntity projectile : player.getProjectileManager().getProjectiles()) {
+        synchronized (player.getProjectileManager().getEntities()) {
+            for (BaseEntity projectile : player.getProjectileManager().getEntities()) {
                 if (projectile.isActive()) {
                     drawEntity(canvas, projectile);
                 }

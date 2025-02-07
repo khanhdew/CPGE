@@ -1,20 +1,11 @@
 package com.khanhdew.gameengine.engine;
 
 import com.khanhdew.gameengine.config.GameConfiguration;
-import com.khanhdew.gameengine.engine.threading.AbstractRunnable;
-import com.khanhdew.gameengine.engine.threading.GameLogicRunnable;
-import com.khanhdew.gameengine.engine.threading.GameRenderRunnable;
-import com.khanhdew.gameengine.engine.threading.IoRunnable;
+import com.khanhdew.gameengine.engine.threading.TaskQueue;
 import com.khanhdew.gameengine.utils.AudioManager;
 import com.khanhdew.gameengine.utils.InputHandler;
 
 import lombok.Data;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Data
@@ -23,8 +14,7 @@ public class GameApp {
     private GameRenderer renderer;
     private InputHandler inputHandler;
     private AudioManager audioManager;
-    private ExecutorService executorService = Executors.newCachedThreadPool();
-    private List<AbstractRunnable> threads;
+    private TaskQueue taskQueue;
     private final GameConfiguration configuration = GameConfiguration.getInstance();
     private final double timePerFrame = configuration.getTimePerFrame();
     private final double timePerUpdate = configuration.getTimePerUpdate();
@@ -38,11 +28,7 @@ public class GameApp {
         this.renderer = renderer;
         this.inputHandler = inputHandler;
         this.audioManager = audioManager;
-        threads = Arrays.asList(
-                new GameLogicRunnable(this)
-                , new GameRenderRunnable(this)
-                , new IoRunnable(this)
-        );
+        taskQueue = new TaskQueue(this);
         gameEngine.getState().pauseGame();
         inputHandler.handleInput();
         gameEngine.spawnEnemyPerSecond(2, 1);
@@ -54,37 +40,18 @@ public class GameApp {
 
     public void start() {
         gameEngine.getState().resumeGame();
-        if (executorService.isShutdown() || executorService.isTerminated()) {
-            executorService = Executors.newCachedThreadPool();
-        }
-        submitThread();
+        taskQueue.start();
     }
 
-    private void submitThread() {
-        if (!executorService.isShutdown()) {
-            threads.forEach(t -> executorService.submit(t));
-        }
-    }
 
     public void resume() {
         gameEngine.getState().resumeGame();
-        executorService = Executors.newCachedThreadPool();
-        submitThread();
+        taskQueue.resume();
     }
 
     public void stop() {
         gameEngine.getState().pauseGame();
-        executorService.shutdown();
-        try {
-            if (!executorService.awaitTermination(60, TimeUnit.SECONDS)) {
-                executorService.shutdownNow();
-                if (!executorService.awaitTermination(60, TimeUnit.SECONDS))
-                    System.err.println("ExecutorService did not terminate");
-            }
-        } catch (InterruptedException ie) {
-            executorService.shutdownNow();
-            Thread.currentThread().interrupt();
-        }
+        taskQueue.stop();
     }
 
 }

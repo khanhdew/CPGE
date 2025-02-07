@@ -58,7 +58,7 @@ public class DesktopRenderer implements GameRenderer {
     }
 
     private void drawProjectiles() {
-        for (Projectile entity : player.getProjectileManager().getProjectiles()) {
+        for (Projectile entity : player.getProjectileManager().getEntities()) {
             if (entity.isActive()) {
                 gc.setFill(Color.BLUE); // Set the color for projectiles
                 drawEntity(gc, entity);

@@ -1,8 +1,9 @@
 package com.khanhdew.gameengine.entity.movable.projectile;
 
 import com.khanhdew.gameengine.config.GameConfiguration;
-import com.khanhdew.gameengine.entity.BaseEntity;
 import com.khanhdew.gameengine.entity.EntityManager;
+import com.khanhdew.gameengine.entity.ObjectPool;
+
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -12,47 +13,53 @@ import java.util.Optional;
 
 @Getter
 public class ProjectileManager implements EntityManager {
-    private final List<Projectile> projectiles;
+
+    private final ObjectPool<Projectile> projectilePool = new ObjectPool<>() {
+        @Override
+        protected Projectile create() {
+            return new Projectile(0, 0, 0);
+        }
+    };
+    private final List<Projectile> entities;
     private final GameConfiguration configuration = GameConfiguration.getInstance();
 
     public ProjectileManager() {
-        this.projectiles = Collections.synchronizedList(new ArrayList<>());
+        this.entities = Collections.synchronizedList(new ArrayList<>());
     }
 
     @Override
     public void update() {
-        projectiles.forEach(Projectile::update);
+        entities.forEach(Projectile::update);
         remove();
     }
 
     @Override
-    public void add(double playerX, double playerY, double targetX, double targetY) {
-        Optional<Projectile> inactiveProjectile = projectiles.stream()
+    public void add(double playerX, double playerY, double angle, double nothing) {
+        Optional<Projectile> inactiveProjectile = entities.stream()
                 .filter(e -> !e.isActive())
                 .findFirst();
 
         if (inactiveProjectile.isPresent()) {
             Projectile e = inactiveProjectile.get();
             e.setActive(true);
-            e.reset(playerX, playerY, targetX, targetY);
-
+            e.reset(playerX, playerY, angle);
         } else {
-            // Nếu không có projectile nào không hoạt động, tạo mới
-            projectiles.add(new Projectile(playerX, playerY, targetX, targetY));
+            Projectile projectile = projectilePool.borrow();
+            projectile.reset(playerX, playerY, angle);
+            entities.add(projectile);
         }
     }
 
     @Override
     public void remove() {
-//        for (int i = projectiles.size() - 1; i >= 0; i--) {
-//            Projectile projectile = projectiles.get(i);
-//            if (projectile.getX() < 0
-//                    || projectile.getX() > configuration.getWindowWidth()
-//                    || projectile.getY() < 0
-//                    || projectile.getY() > configuration.getWindowHeight()) {
-//                projectile.setActive(false);
-//            }
-//        }
+        Optional<Projectile> inactiveProjectile = entities.stream()
+                .filter(e -> !e.isActive())
+                .findFirst();
+        if (inactiveProjectile.isPresent()) {
+            Projectile e = inactiveProjectile.get();
+            entities.remove(e);
+            projectilePool.returnToPool(e);
+        }
     }
 
 }

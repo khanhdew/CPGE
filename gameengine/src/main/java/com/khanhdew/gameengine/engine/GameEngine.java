@@ -47,19 +47,15 @@ public class GameEngine {
     }
 
     public void update() {
-//        for (BaseEntity entity : entities) {
-//            entity.update();
-//        }
-        player.update();
-        player.getProjectileManager().update();
+        playerManager.update();
         enemyManager.update();
         checkCollision();
     }
 
     public void checkCollision() {
         // Kiểm tra va chạm giữa projectiles và enemies
-        synchronized (player.getProjectileManager().getProjectiles()) {
-            player.getProjectileManager().getProjectiles().forEach(projectile -> {
+        synchronized (player.getProjectileManager().getEntities()) {
+            player.getProjectileManager().getEntities().forEach(projectile -> {
                 if (projectile.isActive()) {
                     synchronized (enemyManager.getEnemies()) {
                         enemyManager.getEnemies().stream()

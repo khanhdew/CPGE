@@ -15,7 +15,7 @@ public abstract class UIComponent {
     protected float xCenter;
     protected float yCenter;
     protected float r;
-    public int pointerId;
+    public int pointerId = -1;
     protected Paint paint;
 
 
@@ -33,6 +33,12 @@ public abstract class UIComponent {
         float a = Math.abs(x - xCenter);
         float b = Math.abs(y - yCenter);
         float c = (float) Math.hypot(a, b);
+
+        // fix bug when start game and touch on screen all UIComponent will be touched
+        if(this.pointerId == -1 && c > r){
+            return false;
+        }
+
         if (this.pointerId == pointerId || c <= r) {
             this.pointerId = pointerId;
             return true;

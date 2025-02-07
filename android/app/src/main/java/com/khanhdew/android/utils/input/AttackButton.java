@@ -26,7 +26,7 @@ public class AttackButton extends Joystick {
         super.draw(canvas);
         if (touchDown) {
             innerCircle.draw(canvas);
-            player.shoot(dx, dy);
+            player.shoot(calAngle());
         }
     }
 
@@ -45,9 +45,9 @@ public class AttackButton extends Joystick {
                     }
                 }
                 touchDown = true;
+                dx = x - xCenter;
+                dy = y - yCenter;
                 innerCircle.updatePosition(x,y, xCenter, yCenter,r);
-                dx = (float) ((x - xCenter) * Math.abs(player.getX()));
-                dy = (float) ((y - yCenter) * Math.abs(player.getY()));
                 break;
             }
             case MotionEvent.ACTION_UP:
@@ -63,6 +63,11 @@ public class AttackButton extends Joystick {
                 break;
         }
         return true;
+    }
+
+    public double calAngle() {
+        // Bắn đạn theo góc
+        return (float) Math.atan2(dy, dx);
     }
 
 }
