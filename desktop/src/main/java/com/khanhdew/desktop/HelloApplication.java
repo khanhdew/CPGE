@@ -39,7 +39,7 @@ public class HelloApplication extends Application {
             @Override
             public void handle(WindowEvent event) {
                 System.out.println("App closed");
-                gamePane.getGameApp().getExecutorService().shutdown();
+                gamePane.getGameApp().getTaskQueue().stop();
                 try {
                     System.exit(0);
                 } catch (Exception e) {

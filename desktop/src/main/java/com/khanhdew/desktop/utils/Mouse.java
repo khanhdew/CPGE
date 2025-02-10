@@ -13,9 +13,11 @@ public class Mouse {
         this.player = gamePane.getGameEngine().getPlayer();
     }
 
-    @SuppressWarnings("not fixed yet")
     public void handlerMouseClick(MouseEvent e) {
-        player.shoot((e.getX() - player.getX()), (e.getY() - player.getY()));
+        double x = e.getX();
+        double y = e.getY();
+        double angle = Math.atan2(y, x);
+        player.shoot(angle);
     }
 
     public void handlerMousePress(MouseEvent e) {

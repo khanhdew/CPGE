@@ -1,7 +1,8 @@
-package com.khanhdew.gameengine.engine.threading;
+package com.khanhdew.gameengine.engine.threading.runnable;
 
 import com.khanhdew.gameengine.engine.GameApp;
 import com.khanhdew.gameengine.engine.GameEngine;
+import com.khanhdew.gameengine.engine.threading.AbstractRunnable;
 
 import java.io.Serial;
 
@@ -18,9 +19,9 @@ public class GameRenderRunnable extends AbstractRunnable {
     @Override
     public void run() {
         long previousTime = System.nanoTime();
-        int frames = 0;
         long lastCheck = System.nanoTime(); // Sử dụng nanoTime thay vì currentTimeMillis
         double deltaF = 0;
+        int frames = 0;
 
         try {
             boolean running = gameEngine.getState().isRunning(); // Lưu trạng thái cục bộ
@@ -48,6 +49,11 @@ public class GameRenderRunnable extends AbstractRunnable {
             System.err.println("Render thread encountered an error: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void reset() {
+
     }
 
 }

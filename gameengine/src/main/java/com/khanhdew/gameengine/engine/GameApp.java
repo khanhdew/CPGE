@@ -43,7 +43,6 @@ public class GameApp {
         taskQueue.start();
     }
 
-
     public void resume() {
         gameEngine.getState().resumeGame();
         taskQueue.resume();

@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 public class Projectile extends MovableEntity {
-    protected double damage = 100;
+    protected double damage = 10;
     protected double range = 1000;
 
     public enum Type {

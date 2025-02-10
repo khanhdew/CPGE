@@ -49,6 +49,6 @@ public abstract class UIComponent {
 
     public boolean touchEvent(MotionEvent event, int pointerId){
         return false;
-    };
+    }
 
 }

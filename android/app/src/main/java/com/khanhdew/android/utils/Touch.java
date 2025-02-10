@@ -6,7 +6,7 @@ import android.view.View;
 import com.khanhdew.gameengine.engine.GameEngine;
 
 public class Touch implements View.OnTouchListener {
-    private GameEngine gameEngine;
+    private final GameEngine gameEngine;
     public Touch(GameEngine gameEngine) {
         this.gameEngine = gameEngine;
     }

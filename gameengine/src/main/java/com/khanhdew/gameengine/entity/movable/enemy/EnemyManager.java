@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Getter
 public class EnemyManager implements EntityManager {
-    private List<Enemy> enemies;
+    private final List<Enemy> enemies;
     private final GameConfiguration configuration = GameConfiguration.getInstance();
 
     public EnemyManager() {

@@ -10,4 +10,5 @@ module com.khanhdew.gameengine {
     exports com.khanhdew.gameengine.entity.movable.player;
     exports com.khanhdew.gameengine.entity.movable.enemy;
     exports com.khanhdew.gameengine.entity.movable.projectile;
+    exports com.khanhdew.gameengine.engine.threading;
 }

@@ -1,10 +1,14 @@
-package com.khanhdew.gameengine.engine.threading;
+package com.khanhdew.gameengine.engine.threading.runnable;
 
 import com.khanhdew.gameengine.engine.GameApp;
+import com.khanhdew.gameengine.engine.threading.AbstractRunnable;
 
 import java.io.Serial;
 
 public class GameLogicRunnable extends AbstractRunnable {
+    long lastCheck = System.nanoTime(); // Dùng nanoTime để đảm bảo tính chính xác
+    double deltaU = 0;
+    long previousTime = System.nanoTime();
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -49,5 +53,12 @@ public class GameLogicRunnable extends AbstractRunnable {
             // Kiểm tra lại trạng thái running
             running = gameApp.getGameEngine().getState().isRunning();
         }
+    }
+
+    @Override
+    public void reset() {
+        deltaU = 0;
+        previousTime = System.nanoTime();
+        lastCheck = System.nanoTime();
     }
 }

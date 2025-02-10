@@ -1,6 +1,9 @@
 package com.khanhdew.gameengine.engine.threading;
 
 import com.khanhdew.gameengine.engine.GameApp;
+import com.khanhdew.gameengine.engine.threading.runnable.GameLogicRunnable;
+import com.khanhdew.gameengine.engine.threading.runnable.GameRenderRunnable;
+import com.khanhdew.gameengine.engine.threading.runnable.IoRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 public class TaskQueue {
     private ExecutorService executor = Executors.newCachedThreadPool();
-    private final List<Runnable> tasks = new ArrayList<>();
+    private final List<AbstractRunnable> tasks = new ArrayList<>();
 
     public TaskQueue(GameApp gameApp) {
         addTask(new GameLogicRunnable(gameApp));
@@ -18,15 +21,21 @@ public class TaskQueue {
         addTask(new IoRunnable(gameApp));
     }
 
-    public void addTask(Runnable task) {
+    public void addTask(AbstractRunnable task) {
         tasks.add(task);
     }
 
     private void submitTask() {
         if (!executor.isShutdown()) {
-            for (Runnable task : tasks) {
+            for (AbstractRunnable task : tasks) {
                 executor.submit(task);
             }
+        }
+    }
+
+    private void resetTasks() {
+        for (AbstractRunnable task : tasks) {
+            task.reset();
         }
     }
 
@@ -35,6 +44,7 @@ public class TaskQueue {
             executor = Executors.newCachedThreadPool();
         }
         submitTask();
+
     }
 
     public void stop() {

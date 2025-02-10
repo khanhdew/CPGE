@@ -12,5 +12,6 @@ public abstract class AbstractRunnable implements Runnable, Serializable {
     }
 
     public abstract void run();
+    public abstract void reset();
 
 }

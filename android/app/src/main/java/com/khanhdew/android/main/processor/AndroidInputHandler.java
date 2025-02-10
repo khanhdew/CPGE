@@ -23,7 +23,7 @@ public class AndroidInputHandler implements InputHandler, View.OnTouchListener {
     private Joystick joystick;
     private AttackButton attackButton;
     private final List<UIComponent> uiComponents;
-    private Map<Integer, TouchPoint> activePointers;
+    private final Map<Integer, TouchPoint> activePointers;
 
     private static final String TAG = "AndroidInputHandler";
 
