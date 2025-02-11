@@ -29,6 +29,12 @@
     make docker_run
 ```
 
+- - Install `goose` create database 
+```bash
+    go install github.com/pressly/goose/v3/cmd/goose@latest
+    make goose_up
+```
+
 - Run server
 ```bash
     make run_server

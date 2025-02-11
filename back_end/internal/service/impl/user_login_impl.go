@@ -21,7 +21,6 @@ import (
 	"example.com/be/internal/utils/crypto"
 	"example.com/be/internal/utils/random"
 	"example.com/be/internal/utils/sendto"
-	"example.com/be/internal/utils/sendto/create"
 	"example.com/be/response"
 	"github.com/redis/go-redis/v9"
 )
@@ -140,12 +139,12 @@ func (s *sUserLogin) Register(ctx context.Context, in *model.RegisterInput) (cod
 	switch in.VerifyType {
 	case consts.EMAIL:
 		// send email
-		email := in.VerifyKey
-		err = create.FactoryCreateSendTo(sendto.TYPE_SENDGRID).SendTemplateEmailOTP([]string{email}, consts.EMAIL_HOST, "otp-auth.html", map[string]interface{}{"otp": strconv.Itoa(otpNew)})
+		email_to := in.VerifyKey
+		err = sendto.NewKafkaSendTo().SendKafkaEmailOTP(consts.EMAIL_HOST, email_to, consts.SEND_EMAIL_OTP, strconv.Itoa(otpNew))
 		if err != nil {
 			return response.ErrSendEmailOTP, err
 		}
-		global.Logger.Info(fmt.Sprintf("OTP is sent to email: %s sucess", email))
+		global.Logger.Info(fmt.Sprintf("OTP is sent to email: %s sucess", email_to))
 
 		// 7. save OTP to database
 		result, err := s.r.InsertOTPVerify(
