@@ -55,21 +55,7 @@ services:
       - redis
     networks:
       - go-be-local-network
-
-  # redis metrics service
-  redis-exporter:
-    image: oliver006/redis_exporter:latest
-    container_name: redis-exporter
-    ports:
-      - "${MONITORING_REDIS_EXPORTER_PORT}:9121"
-    networks:
-      - go-be-local-network
-    command:
-      - "--redis.addr=redis://redis:6379"
-
-    depends_on:
-      - redis
-
+      
   # Kafka service
   kafka-0:
     image: bitnami/kafka:3.5

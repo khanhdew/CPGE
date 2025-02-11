@@ -129,7 +129,7 @@ func (s *sUserLogin) Register(ctx context.Context, in *model.RegisterInput) (cod
 	fmt.Printf("New OTP is ::: %d\n", otpNew)
 
 	// 5. save otp in Redis with expiration time
-	timeExpire := time.Duration(consts.TIME_OTP_REGISTER) * time.Minute
+	timeExpire := time.Duration(consts.TIME_OTP_REGISTER) * time.Hour
 	err = global.Rdb.SetEx(ctx, userKey, strconv.Itoa(otpNew), timeExpire).Err()
 	if err != nil {
 		return response.ErrInvalidOTP, err
