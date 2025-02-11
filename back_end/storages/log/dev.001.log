@@ -1,0 +1,20 @@
+2025-02-11T08:51:57.884+0700	INFO	initialize/run.go:18	Logger initialized
+2025-02-11T08:51:57.886+0700	ERROR	initialize/init_mysqlc.go:14	SQLC connection failed	{"error": "sql: unknown driver \"mysql\" (forgotten import?)"}
+example.com/be/internal/initialize.checkErrorPanicC
+	/Users/vinh/code/github.com/Youknow2509/CPGE/back_end/internal/initialize/init_mysqlc.go:14
+example.com/be/internal/initialize.InitMysqlC
+	/Users/vinh/code/github.com/Youknow2509/CPGE/back_end/internal/initialize/init_mysqlc.go:28
+example.com/be/internal/initialize.Run
+	/Users/vinh/code/github.com/Youknow2509/CPGE/back_end/internal/initialize/run.go:21
+main.main
+	/Users/vinh/code/github.com/Youknow2509/CPGE/back_end/cmd/server/main.go:34
+runtime.main
+	/opt/homebrew/Cellar/go/1.23.4/libexec/src/runtime/proc.go:272
+2025-02-11T08:54:43.242+0700	INFO	initialize/run.go:18	Logger initialized
+2025-02-11T08:54:43.262+0700	INFO	initialize/init_mysql.go:36	MySQL connection successful
+2025-02-11T08:54:43.262+0700	INFO	initialize/run.go:23	Mysql initialized
+2025-02-11T08:54:43.262+0700	INFO	initialize/init_mysqlc.go:30	SQLC connection successful
+2025-02-11T08:54:43.262+0700	INFO	initialize/run.go:27	MysqlC initialized
+2025-02-11T08:54:43.262+0700	INFO	initialize/run.go:31	Service interface initialized
+2025-02-11T08:54:43.265+0700	INFO	initialize/run.go:35	Redis initialized
+2025-02-11T08:54:43.265+0700	INFO	initialize/run.go:39	Kafka initialized

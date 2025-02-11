@@ -59,17 +59,17 @@ cre_env:
 # Docker Compose
 docker_run:
 	@echo "Running Docker Compose"
-	docker-compose up -d -f ./environment/docker-compose.yaml
+	docker compose -f ./environment/docker-compose.yml up -d
 	@echo "Docker Compose running"
 
 docker_stop:
 	@echo "Stopping Docker Compose"
-	docker-compose down -f ./environment/docker-compose.yaml
+	docker compose down -f ./environment/docker-compose.yml
 	@echo "Docker Compose stopped"
 
 docker_stop_v:
 	@echo "Stopping Docker Compose and remove volumes, networks, ..."
-	docker-compose down -v -f ./environment/docker-compose.yaml
+	docker compose down -f ./environment/docker-compose.yml --volumes --remove-orphans
 	@echo "Docker Compose stopped and removed volumes, networks, ..."
 
 docker_exec_mysql:
