@@ -87,7 +87,7 @@ func (s *sUserLogin) Register(ctx context.Context, in *model.RegisterInput) (cod
 	// logic
 	// 1. hash email
 	fmt.Printf("Verify key: %s\n", in.VerifyKey)
-	fmt.Printf("Verify type: %c\n", in.VerifyType)
+	fmt.Printf("Verify type: %d\n", in.VerifyType)
 
 	hashKey := crypto.GetHash(strings.ToLower(in.VerifyKey))
 	fmt.Printf("Hash key: %s\n", hashKey)
@@ -108,7 +108,7 @@ func (s *sUserLogin) Register(ctx context.Context, in *model.RegisterInput) (cod
 
 	fmt.Println("userKey::", userKey)
 	fmt.Println("otpFound::", otpFound)
-	fmt.Println("Err:: ", err)
+	// fmt.Println("Err:: ", err)
 
 	// utils...
 	switch {
@@ -118,6 +118,7 @@ func (s *sUserLogin) Register(ctx context.Context, in *model.RegisterInput) (cod
 		fmt.Println("get failed:: ", err)
 		return response.ErrInvalidOTP, err
 	case otpFound != "":
+		// TODO: check spam create otp and send notification
 		return response.ErrCodeOTPNotExist, errors.New("OTP exists but not registered")
 	}
 

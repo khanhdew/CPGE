@@ -23,6 +23,13 @@ definitions:
       token:
         type: string
     type: object
+  model.VerifyInput:
+    properties:
+      verify_code:
+        type: string
+      verify_key:
+        type: string
+    type: object
   response.ErrResponseData:
     properties:
       code:
@@ -151,7 +158,7 @@ paths:
         name: payload
         required: true
         schema:
-          $ref: '#/definitions/model.RegisterInput'
+          $ref: '#/definitions/model.VerifyInput'
       produces:
       - application/json
       responses:

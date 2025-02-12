@@ -34,10 +34,6 @@ func Run() *gin.Engine {
 	InitRedis()
 	global.Logger.Info("Redis initialized")
 
-	// connect to kafka
-	InitKafka()
-	global.Logger.Info("Kafka initialized")
-
 	// connect to Router
 	r := InitRouter()
 

@@ -15,4 +15,14 @@ const (
 	PAYLOAD_SUBJECT_UUID = "SUBJECT_UUID"
 
 	SEND_EMAIL_OTP = 1
+
+)
+
+
+// kafka
+const (
+	KEY_OTP_VERIFY = "otp_verify"
+
+	TOPIC_SERVICE_SEND_MAIL_OTP = "go-service-send-mail-otp"
+	TCP_KAFKA = "localhost:9094"
 )

@@ -1,11 +1,11 @@
 package sendto
 
 import (
-	"context"
 	"encoding/json"
 	"time"
 
-	"example.com/be/global"
+	"example.com/be/internal/consts"
+	"example.com/be/internal/utils/kafka/impl"
 	"github.com/segmentio/kafka-go"
 )
 
@@ -25,12 +25,12 @@ func (k *kafka_send_mail) SendKafkaEmailOTP(from string, to string, type_send in
 	
 	// create message in kafaka
 	msg := kafka.Message{
-		Key:   []byte("otp-auth"),
+		Key:   []byte(consts.KEY_OTP_VERIFY),
 		Value: []byte(requestBody),
 		Time:  time.Now(),
 	}
 
-	return global.KafkaProducer.WriteMessages(context.Background(), msg)
+	return impl.NewProducerSendMailOtpImpl().WriteMessages(msg)
 }
 
 // implement ISendTo interface and create

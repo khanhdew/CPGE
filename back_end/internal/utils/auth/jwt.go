@@ -35,6 +35,7 @@ func CreateToken(uuidToken string) (string, error) {
 			ExpiresAt: expirationAt.Unix(),
 			IssuedAt:  now.Unix(),
 			Issuer:    "go-ecommerce",
+			// TODO: save id user 
 			Subject:   uuidToken,
 		},
 	})

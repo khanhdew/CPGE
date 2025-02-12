@@ -158,7 +158,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.RegisterInput"
+                            "$ref": "#/definitions/model.VerifyInput"
                         }
                     }
                 ],
@@ -212,6 +212,17 @@
                     "type": "string"
                 },
                 "token": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.VerifyInput": {
+            "type": "object",
+            "properties": {
+                "verify_code": {
+                    "type": "string"
+                },
+                "verify_key": {
                     "type": "string"
                 }
             }
