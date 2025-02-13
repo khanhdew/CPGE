@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"example.com/send_mail/global"
+	"example.com/send_mail/model"
 )
 
 // reader and process
@@ -21,10 +22,9 @@ func ReaderAndProcess() {
 		}
 		
 		key := strings.TrimSpace(string(m.Key))
-		valueDecode := json.NewDecoder(strings.NewReader(string(m.Value)))
-		var value interface{}
-		if err := valueDecode.Decode(&value); err != nil {
-			log.Fatal("failed to decode value:", err)
+		var value model.Message
+		if err := json.Unmarshal(m.Value, &value); err != nil {
+			log.Fatal("failed to unmarshal message:", err)
 			continue
 		}
 
