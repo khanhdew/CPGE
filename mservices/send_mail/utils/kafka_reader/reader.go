@@ -13,6 +13,6 @@ func GetKafkaReader(topic, kafkaURL, groupID string) *kafka.Reader {
 		Topic:   topic,
 		GroupID: groupID,
 		CommitInterval: 1 * time.Second,
-		StartOffset: kafka.FirstOffset,
+		StartOffset: kafka.LastOffset,
 	})
 }

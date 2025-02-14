@@ -1,2 +1,5 @@
 sendgird:
   api_key: ""
+kafka:
+  bootstrap_server_mail: "localhost:9094"
+  

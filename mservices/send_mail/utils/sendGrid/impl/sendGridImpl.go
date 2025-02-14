@@ -6,6 +6,7 @@ import (
 	"html/template"
 	"log"
 
+	"example.com/send_mail/global"
 	isendgrid "example.com/send_mail/utils/sendGrid"
 	"github.com/sendgrid/sendgrid-go"
 	"github.com/sendgrid/sendgrid-go/helpers/mail"
@@ -72,7 +73,7 @@ func (s *SendGridImpl) SendText(from string, to string, data string) error {
 }
 
 // new SendGridImpl
-func NewSendGridImpl() isendgrid.ISendMail {
+func NewSendGridImpl() isendgrid.ISendGridMail {
 	return &SendGridImpl{}
 }
 
@@ -115,7 +116,7 @@ func BuildMessageInSendGird(m isendgrid.Mail) *mail.SGMailV3 {
 func sendMail(m isendgrid.Mail) error {
 	message := BuildMessageInSendGird(m)
 
-	client := sendgrid.NewSendClient("123") // TODO
+	client := sendgrid.NewSendClient(global.Config.SendGrid.APIKey)
 
 	response, err := client.Send(message)
 	if err != nil {

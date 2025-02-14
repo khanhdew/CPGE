@@ -1,6 +1,6 @@
-package sendgrid
+package sendGrid
 
-var vISendMail ISendMail
+var vISendMail ISendGridMail
 
 
 // Send a simple text email
@@ -20,18 +20,18 @@ type Mail struct {
 }
 
 // New interface for sending mail
-func NewISendMail(iSendMail ISendMail) {
+func NewISendMail(iSendMail ISendGridMail) {
 	vISendMail = iSendMail
 }
 
 // interface for sending mail
-type ISendMail interface {
+type ISendGridMail interface {
 	SendText(from, to, data string) error
 	SendTemplateEmailOTP(from, to, data string) error
 }
 
 // get instance of ISendMail
-func GetSendMail() ISendMail {
+func GetISendMail() ISendGridMail {
 	if (vISendMail == nil) {
 		panic("SendGrid not initialized")
 	}

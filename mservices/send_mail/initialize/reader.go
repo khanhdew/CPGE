@@ -9,6 +9,8 @@ import (
 
 	"example.com/send_mail/global"
 	"example.com/send_mail/model"
+	"example.com/send_mail/service"
+	isSendMail "example.com/send_mail/service/impl"
 )
 
 // reader and process
@@ -30,6 +32,15 @@ func ReaderAndProcess() {
 
 		// Process message here
         fmt.Printf("Consumed message: %s, Key: %s, Value: %+v\n", string(m.Topic), key, value)
+		
+		implServiceSendMail := isSendMail.NewSendMailImpl()
+		service.NewSendMailService(implServiceSendMail)
+		sSendMail := service.GetSendMailService()
+		err = sSendMail.SendMail(value)
+		if err != nil {
+			log.Fatal("failed to send mail:", err)
+			continue
+		}
 	}
 	
 	if err := r.Close(); err != nil {
