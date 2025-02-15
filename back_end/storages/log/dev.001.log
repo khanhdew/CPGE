@@ -1,0 +1,130 @@
+2025-02-11T08:51:57.884+0700	INFO	initialize/run.go:18	Logger initialized
+2025-02-11T08:51:57.886+0700	ERROR	initialize/init_mysqlc.go:14	SQLC connection failed	{"error": "sql: unknown driver \"mysql\" (forgotten import?)"}
+example.com/be/internal/initialize.checkErrorPanicC
+	/Users/vinh/code/github.com/Youknow2509/CPGE/back_end/internal/initialize/init_mysqlc.go:14
+example.com/be/internal/initialize.InitMysqlC
+	/Users/vinh/code/github.com/Youknow2509/CPGE/back_end/internal/initialize/init_mysqlc.go:28
+example.com/be/internal/initialize.Run
+	/Users/vinh/code/github.com/Youknow2509/CPGE/back_end/internal/initialize/run.go:21
+main.main
+	/Users/vinh/code/github.com/Youknow2509/CPGE/back_end/cmd/server/main.go:34
+runtime.main
+	/opt/homebrew/Cellar/go/1.23.4/libexec/src/runtime/proc.go:272
+2025-02-11T08:54:43.242+0700	INFO	initialize/run.go:18	Logger initialized
+2025-02-11T08:54:43.262+0700	INFO	initialize/init_mysql.go:36	MySQL connection successful
+2025-02-11T08:54:43.262+0700	INFO	initialize/run.go:23	Mysql initialized
+2025-02-11T08:54:43.262+0700	INFO	initialize/init_mysqlc.go:30	SQLC connection successful
+2025-02-11T08:54:43.262+0700	INFO	initialize/run.go:27	MysqlC initialized
+2025-02-11T08:54:43.262+0700	INFO	initialize/run.go:31	Service interface initialized
+2025-02-11T08:54:43.265+0700	INFO	initialize/run.go:35	Redis initialized
+2025-02-11T08:54:43.265+0700	INFO	initialize/run.go:39	Kafka initialized
+2025-02-11T09:23:50.645+0700	INFO	initialize/run.go:18	Logger initialized
+2025-02-11T09:23:50.649+0700	ERROR	initialize/init_mysql.go:18	MySQL connection failed	{"error": "driver: bad connection"}
+example.com/be/internal/initialize.checkErrorPanic
+	/Users/vinh/code/github.com/Youknow2509/CPGE/back_end/internal/initialize/init_mysql.go:18
+example.com/be/internal/initialize.InitMysql
+	/Users/vinh/code/github.com/Youknow2509/CPGE/back_end/internal/initialize/init_mysql.go:34
+example.com/be/internal/initialize.Run
+	/Users/vinh/code/github.com/Youknow2509/CPGE/back_end/internal/initialize/run.go:22
+main.main
+	/Users/vinh/code/github.com/Youknow2509/CPGE/back_end/cmd/server/main.go:34
+runtime.main
+	/opt/homebrew/Cellar/go/1.23.4/libexec/src/runtime/proc.go:272
+2025-02-11T09:24:00.558+0700	INFO	initialize/run.go:18	Logger initialized
+2025-02-11T09:24:00.569+0700	INFO	initialize/init_mysql.go:36	MySQL connection successful
+2025-02-11T09:24:00.569+0700	INFO	initialize/run.go:23	Mysql initialized
+2025-02-11T09:24:00.569+0700	INFO	initialize/init_mysqlc.go:30	SQLC connection successful
+2025-02-11T09:24:00.569+0700	INFO	initialize/run.go:27	MysqlC initialized
+2025-02-11T09:24:00.569+0700	INFO	initialize/run.go:31	Service interface initialized
+2025-02-11T09:24:00.571+0700	INFO	initialize/run.go:35	Redis initialized
+2025-02-11T09:24:00.571+0700	INFO	initialize/run.go:39	Kafka initialized
+2025-02-11T09:24:40.015+0700	ERROR	account/login_controller.go:64	Error registering user otp	{"error": "Error 1146 (42S02): Table 'go_back_end.user_base_001' doesn't exist"}
+example.com/be/internal/controller/account.(*cUserLogin).Register
+	/Users/vinh/code/github.com/Youknow2509/CPGE/back_end/internal/controller/account/login_controller.go:64
+github.com/gin-gonic/gin.(*Context).Next
+	/Users/vinh/go/pkg/mod/github.com/gin-gonic/gin@v1.9.0/context.go:174
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/Users/vinh/go/pkg/mod/github.com/gin-gonic/gin@v1.9.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/Users/vinh/go/pkg/mod/github.com/gin-gonic/gin@v1.9.0/context.go:174
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/Users/vinh/go/pkg/mod/github.com/gin-gonic/gin@v1.9.0/logger.go:240
+github.com/gin-gonic/gin.(*Context).Next
+	/Users/vinh/go/pkg/mod/github.com/gin-gonic/gin@v1.9.0/context.go:174
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/Users/vinh/go/pkg/mod/github.com/gin-gonic/gin@v1.9.0/gin.go:620
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/Users/vinh/go/pkg/mod/github.com/gin-gonic/gin@v1.9.0/gin.go:576
+net/http.serverHandler.ServeHTTP
+	/opt/homebrew/Cellar/go/1.23.4/libexec/src/net/http/server.go:3210
+net/http.(*conn).serve
+	/opt/homebrew/Cellar/go/1.23.4/libexec/src/net/http/server.go:2092
+2025-02-11T10:37:21.924+0700	INFO	initialize/run.go:18	Logger initialized
+2025-02-11T10:37:21.934+0700	INFO	initialize/init_mysql.go:36	MySQL connection successful
+2025-02-11T10:37:21.934+0700	INFO	initialize/run.go:23	Mysql initialized
+2025-02-11T10:37:21.934+0700	INFO	initialize/init_mysqlc.go:30	SQLC connection successful
+2025-02-11T10:37:21.934+0700	INFO	initialize/run.go:27	MysqlC initialized
+2025-02-11T10:37:21.934+0700	INFO	initialize/run.go:31	Service interface initialized
+2025-02-11T10:37:21.937+0700	INFO	initialize/run.go:35	Redis initialized
+2025-02-11T10:37:21.937+0700	INFO	initialize/run.go:39	Kafka initialized
+2025-02-11T10:38:00.631+0700	INFO	initialize/run.go:18	Logger initialized
+2025-02-11T10:38:00.635+0700	INFO	initialize/init_mysql.go:36	MySQL connection successful
+2025-02-11T10:38:00.635+0700	INFO	initialize/run.go:23	Mysql initialized
+2025-02-11T10:38:00.635+0700	INFO	initialize/init_mysqlc.go:30	SQLC connection successful
+2025-02-11T10:38:00.635+0700	INFO	initialize/run.go:27	MysqlC initialized
+2025-02-11T10:38:00.635+0700	INFO	initialize/run.go:31	Service interface initialized
+2025-02-11T10:38:00.637+0700	INFO	initialize/run.go:35	Redis initialized
+2025-02-11T10:38:00.637+0700	INFO	initialize/run.go:39	Kafka initialized
+2025-02-11T10:38:07.674+0700	ERROR	account/login_controller.go:64	Error registering user otp	{"error": "[3] Unknown Topic Or Partition: the request is for a topic or partition that does not exist on this broker"}
+example.com/be/internal/controller/account.(*cUserLogin).Register
+	/Users/vinh/code/github.com/Youknow2509/CPGE/back_end/internal/controller/account/login_controller.go:64
+github.com/gin-gonic/gin.(*Context).Next
+	/Users/vinh/go/pkg/mod/github.com/gin-gonic/gin@v1.9.0/context.go:174
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/Users/vinh/go/pkg/mod/github.com/gin-gonic/gin@v1.9.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/Users/vinh/go/pkg/mod/github.com/gin-gonic/gin@v1.9.0/context.go:174
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/Users/vinh/go/pkg/mod/github.com/gin-gonic/gin@v1.9.0/logger.go:240
+github.com/gin-gonic/gin.(*Context).Next
+	/Users/vinh/go/pkg/mod/github.com/gin-gonic/gin@v1.9.0/context.go:174
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/Users/vinh/go/pkg/mod/github.com/gin-gonic/gin@v1.9.0/gin.go:620
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/Users/vinh/go/pkg/mod/github.com/gin-gonic/gin@v1.9.0/gin.go:576
+net/http.serverHandler.ServeHTTP
+	/opt/homebrew/Cellar/go/1.23.4/libexec/src/net/http/server.go:3210
+net/http.(*conn).serve
+	/opt/homebrew/Cellar/go/1.23.4/libexec/src/net/http/server.go:2092
+2025-02-11T10:41:13.201+0700	INFO	impl/user_login_impl.go:147	OTP is sent to email: v2i5n9h@gmail.com sucess
+2025-02-11T10:41:13.208+0700	INFO	impl/user_login_impl.go:168	Last id verify user: 1
+2025-02-11T10:43:41.416+0700	INFO	impl/user_login_impl.go:147	OTP is sent to email: v2i5n9h@gmail.com sucess
+2025-02-11T10:43:41.422+0700	ERROR	account/login_controller.go:64	Error registering user otp	{"error": "Error 1062 (23000): Duplicate entry 'v2i5n9h@gmail.com' for key 'user_verify_001.user_verify_001_verify_key_unique'"}
+example.com/be/internal/controller/account.(*cUserLogin).Register
+	/Users/vinh/code/github.com/Youknow2509/CPGE/back_end/internal/controller/account/login_controller.go:64
+github.com/gin-gonic/gin.(*Context).Next
+	/Users/vinh/go/pkg/mod/github.com/gin-gonic/gin@v1.9.0/context.go:174
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/Users/vinh/go/pkg/mod/github.com/gin-gonic/gin@v1.9.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/Users/vinh/go/pkg/mod/github.com/gin-gonic/gin@v1.9.0/context.go:174
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/Users/vinh/go/pkg/mod/github.com/gin-gonic/gin@v1.9.0/logger.go:240
+github.com/gin-gonic/gin.(*Context).Next
+	/Users/vinh/go/pkg/mod/github.com/gin-gonic/gin@v1.9.0/context.go:174
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/Users/vinh/go/pkg/mod/github.com/gin-gonic/gin@v1.9.0/gin.go:620
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/Users/vinh/go/pkg/mod/github.com/gin-gonic/gin@v1.9.0/gin.go:576
+net/http.serverHandler.ServeHTTP
+	/opt/homebrew/Cellar/go/1.23.4/libexec/src/net/http/server.go:3210
+net/http.(*conn).serve
+	/opt/homebrew/Cellar/go/1.23.4/libexec/src/net/http/server.go:2092
+2025-02-11T11:04:07.000+0700	INFO	initialize/run.go:18	Logger initialized
+2025-02-11T11:04:07.009+0700	INFO	initialize/init_mysql.go:36	MySQL connection successful
+2025-02-11T11:04:07.009+0700	INFO	initialize/run.go:23	Mysql initialized
+2025-02-11T11:04:07.009+0700	INFO	initialize/init_mysqlc.go:30	SQLC connection successful
+2025-02-11T11:04:07.009+0700	INFO	initialize/run.go:27	MysqlC initialized
+2025-02-11T11:04:07.009+0700	INFO	initialize/run.go:31	Service interface initialized
+2025-02-11T11:04:07.011+0700	INFO	initialize/run.go:35	Redis initialized
+2025-02-11T11:04:07.011+0700	INFO	initialize/run.go:39	Kafka initialized

@@ -43,3 +43,13 @@ build/
 # Ignore Gradle build output directory
 build
 gradle
+
+# Enviroment docker
+./back_end/environment/volume_docker/
+./back_end/environment/data/
+./back_end/environment/init/
+
+# Enviroment key and config
+**/.env
+
+
